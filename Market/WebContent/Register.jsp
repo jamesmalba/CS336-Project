@@ -7,9 +7,10 @@
 <title>Registering</title>
 </head>
 <body>
-<form action="Login.jsp" method="post">
+<form action="Registered.jsp" method="post">
 	Username :<input type= text name="uname">
 	Password :<input type= text name="upass">
+	Email :<input type= text name="email">
 	<input type="submit">
 	</form>
 </body>
