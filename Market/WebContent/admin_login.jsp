@@ -4,14 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Registering</title>
+<title>Login</title>
 </head>
 <body>
-<h1>Register A User Here</h1>
+<h1>Administrator Login</h1>
 <form action="Registered.jsp" method="post">
 	Username: <input type= text name="uname"> <br> <br>
 	Password: <input type= text name="upass"> <br> <br>
-	Email: <input type= text name="email"> <br> <br>
 	<input type="submit" value="Submit">
 	</form>
 </body>

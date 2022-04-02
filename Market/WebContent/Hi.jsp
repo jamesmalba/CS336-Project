@@ -9,26 +9,31 @@
 <title>Login page</title>
 </head>
 <body>
-	<center>
+<h1>Welcome to Eebay</h1>
+	
 	<form action="Login.jsp" method="post">
-	Username :<input type= text name="uname">
-	Password :<input type= text name="upass">
-	<input type="submit">
+		Username: <input type= text name="uname"><br><br>
+		Password: <input type= text name="upass"><br>
+		<input type="submit" value="Submit">
 	</form>
-	</center>
-	 <br>
-	  <br>
-	   <br>
+	
+	<br><br><br>
 	   No account?? Register then
 	   <form method="get" action="Register.jsp">
 		    <!-- note the show.jsp will be invoked when the choice is made -->
 			<!-- The next lines give HTML for radio buttons being displayed -->
-		  <input type="radio" name="command" value="beers"/>
-		  <br>
-		  <input type="submit" value="submit" />
+		    <!-- <input type="radio" name="command" value="beers"/> -->
+		  <input type="submit" value="Register Here"/>
 		</form>
 		<br>
 	   
+	   Are you an Admin? Login here
+	   <form method="get" action="admin_login.jsp">
+		    <!-- note the show.jsp will be invoked when the choice is made -->
+			<!-- The next lines give HTML for radio buttons being displayed -->
+		    <!-- <input type="radio" name="command" value="beers"/> -->
+		  <input type="submit" value="Login Here"/>
+		</form>
 	
 </body>
 </html>
