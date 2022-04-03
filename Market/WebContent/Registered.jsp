@@ -17,7 +17,6 @@
 			String pass = request.getParameter("upass");
 			String email = request.getParameter("email");
 			String passc = request.getParameter("upassc");
-			String dob = request.getParameter("dob");
 			
 			if(!pass.equals(passc)){
 		    	out.println("Password and confirm password have to match.");
