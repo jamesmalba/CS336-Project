@@ -25,8 +25,8 @@
 		    }
 			
 			//Get the database connection
-			ApplicationDB db = new ApplicationDB();	
-			Connection con = db.getConnection();		
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root", "Qwe123456");		
 			
 			Statement stmt = con.createStatement();
 			String insert = "INSERT INTO user(name,password,email)" + "VALUES (?, ?, ?)";
@@ -41,7 +41,7 @@
 			con.close();
 			
 			out.print("User created!");
-			response.sendRedirect("hi.jsp");
+			response.sendRedirect("Hi.jsp");
 			
 		} 
 		catch (Exception ex) {
