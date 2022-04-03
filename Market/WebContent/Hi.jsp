@@ -13,7 +13,7 @@
 	
 	<h2>User Login</h2>
 	<form action="Login.jsp" method="post">
-		Username: <input type= text name="uname"><br><br>
+		Username (Email): <input type= text name="uname"><br><br>
 		Password: <input type= text name="upass"><br>
 		<input type="submit" value="Submit">
 	</form>

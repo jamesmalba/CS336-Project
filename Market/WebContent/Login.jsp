@@ -7,43 +7,33 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Logined</title>
+		<title>Welcome</title>
 	</head>
 	<body>
-	Hello User 
-		<% try {
+		<% {
 	
 			//Get the database connection
-			ApplicationDB db = new ApplicationDB();	
-			Connection con = db.getConnection();		
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root", "Qwe123456");		
 
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
 			//Get the selected radio button from the index.jsp
-			char q='"';
 			String entity = request.getParameter("uname");
-			//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
-			String str = "SELECT * FROM user U Where U.name = "+q + entity+q;
-			//Run the query against the database.
-			ResultSet result = stmt.executeQuery(str);
-			//parse out the results
-			while (result.next()) { %>
-				<tr>    
-					<td><%= result.getString("email") %></td>
-					<td>
-					</td>
-				</tr>
-				
-
-			<% }
+			String pass = request.getParameter("upass");
 			
-		%>
-			
-
-		<%} catch (Exception e) {
-			out.print(e);
-		}%>
-	
+			ResultSet rs;
+		    rs = stmt.executeQuery("select * from user where email='" + entity + "' and password='" + pass + "'");
+		
+			if (rs.next()) {
+        		session.setAttribute("user", entity); // the username will be stored in the session
+        		out.println("Welcome " + entity + "!!!");
+        		out.println("<a href='logout.jsp'>Log out</a>");
+        		response.sendRedirect("Welcome.jsp");
+    		} else {
+        		out.println("Invalid password <a href='login.jsp'>try again</a>");
+    		}
+		} %>
 
 	</body>
 </html>

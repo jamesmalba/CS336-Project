@@ -7,13 +7,12 @@
 <title>Registering</title>
 </head>
 <body>
-<h1>Register A User Here</h1>
+<h1>Register Here</h1>
 <form action="Registered.jsp" method="post">
 	Email: <input type= text name="email"> <br> <br>
-	Username: <input type= text name="uname"> <br> <br>
+	Full Name: <input type= text name="uname"> <br> <br>
 	Password: <input type= text name="upass"> <br> <br>
 	Confirm Password: <input type= text name="upassc"> <br> <br>
-	Date of Birth (Year-Month-Day): <input type= text name="dob"> <br> <br>
 	<input type="submit" value="Submit">
 	</form>
 </body>
