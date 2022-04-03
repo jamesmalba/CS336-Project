@@ -10,22 +10,27 @@
 		<title>done</title>
 	</head>
 	<body>
-	You are registered go back to main page 
-		<% try {
-	
+		<% 
+		try {
+		
+			String name = request.getParameter("uname");
+			String pass = request.getParameter("upass");
+			String email = request.getParameter("email");
+			String passc = request.getParameter("upassc");
+			String dob = request.getParameter("dob");
+			
+			if(!pass.equals(passc)){
+		    	out.println("Password and confirm password have to match.");
+		    	out.println("<a href='Register.jsp'>try again</a>");
+		    	return;
+		    }
+			
 			//Get the database connection
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();		
-
 			
 			Statement stmt = con.createStatement();
-		
-			char q='"';
-			String name = request.getParameter("uname");
-			String pass=request.getParameter("upass");
-			String email=request.getParameter("email");
-			
-			String insert = "Insert into user(name, password,email) "+ "VALUES (?, ?, ?)";
+			String insert = "INSERT INTO user(name,password,email)" + "VALUES (?, ?, ?)";
 			PreparedStatement ps = con.prepareStatement(insert);
 			
 			ps.setString(1, name);
@@ -34,15 +39,17 @@
 			//Run the query against the DB
 			ps.executeUpdate();
 			//parse out the results
+			con.close();
 			
+			out.print("User created!");
+			response.sendRedirect("hi.jsp");
 			
-		%>
-			
-
-		<%} catch (Exception e) {
-			out.print(e);
-		}%>
+		} 
+		catch (Exception ex) {
+			out.print(ex);
+			out.print("Insert failed");
+		}
+%>
 	
-
 	</body>
 </html>
