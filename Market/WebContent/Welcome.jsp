@@ -12,6 +12,6 @@
 <h1>Welcome to Eebay</h1>
 	
 	<h2>What to do?</h2>
-	<a href='Hi.jsp'>Log out (does not actually log you out)</a>
+	<a href='logout.jsp'>Log out</a>
 </body>
 </html>
