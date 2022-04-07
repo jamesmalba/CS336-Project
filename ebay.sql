@@ -484,6 +484,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES ('fdsfdsfdsf','fdsfds','fdsfsdfs',NULL,NULL,NULL,NULL,NULL,NULL),('jasss','fewdw','nice23',NULL,NULL,NULL,NULL,NULL,NULL),('gdfgdgdf','fgds','gfdgdfgdfgdf',NULL,NULL,NULL,NULL,NULL,NULL),('NICEU','IF THIS WORKS POG','FSAK',NULL,NULL,NULL,NULL,NULL,NULL),('James','jamesgmail.com','qwe123','0000-00-00',100,'123 rutgers lane',NULL,NULL,NULL),('Mr. Rutger','test@rutgers.edu','qwe123',NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -496,4 +497,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-31 19:05:29
+-- Dump completed on 2022-04-07 16:36:37
