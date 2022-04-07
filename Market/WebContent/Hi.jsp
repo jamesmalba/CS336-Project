@@ -13,11 +13,15 @@
 	
 	<h2>User Login</h2>
 	<form action="Login.jsp" method="post">
-		Username (Email): <input type= text name="uname"><br><br>
+		Username (Email): <input type= text name="uname"> <br><br>
 		Password: <input type= text name="upass"><br>
 		<input type="submit" value="Submit">
 	</form>
 	
+	<br> 
+	Example: <br>Username: test@rutgers.edu <br>password: qwe123
+	<br> <br>
+	Make sure db username/password is set as:<br> user: root <br>password: Qwe123456
 	<br><br><br>
 	
 		<a href="Register.jsp">No account?? Register then</a> <br> <br>
