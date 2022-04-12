@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>Administrator Login</h1>
-<form action="Registered.jsp" method="post">
+<form action="admin_credentials.jsp" method="post">
 	Username: <input type= text name="uname"> <br> <br>
 	Password: <input type= text name="upass"> <br> <br>
 	<input type="submit" value="Submit">

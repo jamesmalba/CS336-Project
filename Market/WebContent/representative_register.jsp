@@ -4,13 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<title>Registering</title>
 </head>
 <body>
-<h1>Employee Login</h1>
-<form action="customer_rep_credentials.jsp" method="post">
-	Username: <input type= text name="uname"> <br> <br>
+<h1>Register Here</h1>
+<form action="representative_registered.jsp" method="post">
+	Email: <input type= text name="email"> <br> <br>
+	Full Name: <input type= text name="uname"> <br> <br>
+	Representative ID Number: <input type= text name="urepID"> <br> <br>
 	Password: <input type= text name="upass"> <br> <br>
+	Confirm Password: <input type= text name="upassc"> <br> <br>
 	<input type="submit" value="Submit">
 	</form>
 </body>

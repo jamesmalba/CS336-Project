@@ -9,7 +9,7 @@
 <title>Login page</title>
 </head>
 <body>
-<h1>Welcome to Eebay</h1>
+<h1>Welcome to Ebay</h1>
 	
 	<h2>User Login</h2>
 	<form action="Login.jsp" method="post">
