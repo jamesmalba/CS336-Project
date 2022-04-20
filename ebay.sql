@@ -25,11 +25,10 @@ DROP TABLE IF EXISTS `administrator`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `administrator` (
-  `admin_id` int NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`admin_id`)
+  `admin_email` varchar(50) NOT NULL,
+  PRIMARY KEY (`admin_email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -73,11 +72,11 @@ DROP TABLE IF EXISTS `assisted_by`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `assisted_by` (
-  `rep_ID` int NOT NULL,
+  `rep_email` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  PRIMARY KEY (`rep_ID`,`email`),
+  PRIMARY KEY (`rep_email`,`email`),
   KEY `email` (`email`),
-  CONSTRAINT `assisted_by_ibfk_1` FOREIGN KEY (`rep_ID`) REFERENCES `customer_rep` (`rep_ID`),
+  CONSTRAINT `assisted_by_ibfk_1` FOREIGN KEY (`rep_email`) REFERENCES `customer_rep` (`rep_email`),
   CONSTRAINT `assisted_by_ibfk_2` FOREIGN KEY (`email`) REFERENCES `user` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -182,12 +181,12 @@ DROP TABLE IF EXISTS `createdby`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `createdby` (
-  `rep_ID` int NOT NULL,
-  `admin_id` int NOT NULL,
-  PRIMARY KEY (`rep_ID`,`admin_id`),
-  KEY `admin_id` (`admin_id`),
-  CONSTRAINT `createdby_ibfk_1` FOREIGN KEY (`rep_ID`) REFERENCES `customer_rep` (`rep_ID`),
-  CONSTRAINT `createdby_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `administrator` (`admin_id`)
+  `rep_email` varchar(50) NOT NULL,
+  `admin_email` varchar(50) NOT NULL,
+  PRIMARY KEY (`rep_email`,`admin_email`),
+  KEY `admin_email` (`admin_email`),
+  CONSTRAINT `createdby_ibfk_1` FOREIGN KEY (`rep_email`) REFERENCES `customer_rep` (`rep_email`),
+  CONSTRAINT `createdby_ibfk_2` FOREIGN KEY (`admin_email`) REFERENCES `administrator` (`admin_email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -208,11 +207,10 @@ DROP TABLE IF EXISTS `customer_rep`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer_rep` (
-  `rep_ID` int NOT NULL,
-  `email` varchar(50) DEFAULT NULL,
+  `rep_email` varchar(50) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`rep_ID`)
+  PRIMARY KEY (`rep_email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -233,11 +231,11 @@ DROP TABLE IF EXISTS `documented_by`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `documented_by` (
-  `admin_id` int NOT NULL,
+  `admin_email` varchar(50) NOT NULL,
   `auctionid` int NOT NULL,
-  PRIMARY KEY (`admin_id`,`auctionid`),
+  PRIMARY KEY (`admin_email`,`auctionid`),
   KEY `auctionid` (`auctionid`),
-  CONSTRAINT `documented_by_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `administrator` (`admin_id`),
+  CONSTRAINT `documented_by_ibfk_1` FOREIGN KEY (`admin_email`) REFERENCES `administrator` (`admin_email`),
   CONSTRAINT `documented_by_ibfk_2` FOREIGN KEY (`auctionid`) REFERENCES `auction` (`auctionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -285,11 +283,11 @@ DROP TABLE IF EXISTS `makes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `makes` (
-  `admin_id` int NOT NULL,
+  `admin_email` varchar(50) NOT NULL,
   `report_id` int NOT NULL,
-  PRIMARY KEY (`report_id`,`admin_id`),
-  KEY `admin_id` (`admin_id`),
-  CONSTRAINT `makes_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `administrator` (`admin_id`),
+  PRIMARY KEY (`report_id`,`admin_email`),
+  KEY `admin_email` (`admin_email`),
+  CONSTRAINT `makes_ibfk_1` FOREIGN KEY (`admin_email`) REFERENCES `administrator` (`admin_email`),
   CONSTRAINT `makes_ibfk_2` FOREIGN KEY (`report_id`) REFERENCES `report` (`report_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -312,11 +310,11 @@ DROP TABLE IF EXISTS `moderated_by`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `moderated_by` (
   `auctionId` int NOT NULL,
-  `rep_ID` int NOT NULL,
-  PRIMARY KEY (`auctionId`,`rep_ID`),
-  KEY `rep_ID` (`rep_ID`),
+  `rep_email` varchar(50) NOT NULL,
+  PRIMARY KEY (`auctionId`,`rep_email`),
+  KEY `rep_email` (`rep_email`),
   CONSTRAINT `moderated_by_ibfk_1` FOREIGN KEY (`auctionId`) REFERENCES `auction` (`auctionId`),
-  CONSTRAINT `moderated_by_ibfk_2` FOREIGN KEY (`rep_ID`) REFERENCES `customer_rep` (`rep_ID`)
+  CONSTRAINT `moderated_by_ibfk_2` FOREIGN KEY (`rep_email`) REFERENCES `customer_rep` (`rep_email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

@@ -11,7 +11,6 @@
 <form action="representative_registered.jsp" method="post">
 	Email: <input type= text name="email"> <br> <br>
 	Full Name: <input type= text name="uname"> <br> <br>
-	Representative ID Number: <input type= text name="urepID"> <br> <br>
 	Password: <input type= text name="upass"> <br> <br>
 	Confirm Password: <input type= text name="upassc"> <br> <br>
 	<input type="submit" value="Submit">

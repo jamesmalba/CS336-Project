@@ -9,7 +9,7 @@
 <title>Welcome!</title>
 </head>
 <body>
-<h1>Welcome to Eebay</h1>
+<h1>Welcome to Ebay</h1>
 Hello <%=session.getAttribute("user")%> <br>
 	<h2>What to do?</h2>
 	<a href='logout.jsp'>Log out</a>

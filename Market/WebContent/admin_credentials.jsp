@@ -23,7 +23,7 @@
 			String pass = request.getParameter("upass");
 			
 			ResultSet rs;
-		    rs = stmt.executeQuery("select * from administrator where admin_id='" + entity + "' and password='" + pass + "'");
+		    rs = stmt.executeQuery("select * from administrator where admin_email='" + entity + "' and password='" + pass + "'");
 		
 			if (rs.next()) {
         		session.setAttribute("user", entity); // the username will be stored in the session
