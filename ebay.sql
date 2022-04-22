@@ -284,11 +284,11 @@ DROP TABLE IF EXISTS `makes`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `makes` (
   `admin_email` varchar(50) NOT NULL,
-  `report_id` int NOT NULL,
-  PRIMARY KEY (`report_id`,`admin_email`),
+  `sale_id` int NOT NULL,
+  PRIMARY KEY (`sale_id`,`admin_email`),
   KEY `admin_email` (`admin_email`),
   CONSTRAINT `makes_ibfk_1` FOREIGN KEY (`admin_email`) REFERENCES `administrator` (`admin_email`),
-  CONSTRAINT `makes_ibfk_2` FOREIGN KEY (`report_id`) REFERENCES `report` (`report_id`)
+  CONSTRAINT `makes_ibfk_2` FOREIGN KEY (`sale_id`) REFERENCES `ledger` (`sale_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -354,31 +354,31 @@ LOCK TABLES `posts` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `report`
+-- Table structure for table `ledger`
 --
 
-DROP TABLE IF EXISTS `report`;
+DROP TABLE IF EXISTS `ledger`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `report` (
-  `report_date` date DEFAULT NULL,
-  `total_earnings` double DEFAULT NULL,
+CREATE TABLE `ledger` (
+  `sale_date` date DEFAULT NULL,
+  `item_price` double DEFAULT NULL,
   `item` varchar(50) DEFAULT NULL,
   `item_type` varchar(50) DEFAULT NULL,
-  `end_user` int DEFAULT NULL,
-  `best_selling` varchar(50) DEFAULT NULL,
-  `report_id` int NOT NULL,
-  PRIMARY KEY (`report_id`)
+  `buyer` varchar(50) DEFAULT NULL,
+  `seller` varchar(50) DEFAULT NULL,
+  `sale_id` int NOT NULL,
+  PRIMARY KEY (`sale_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `report`
+-- Dumping data for table `ledger`
 --
 
-LOCK TABLES `report` WRITE;
-/*!40000 ALTER TABLE `report` DISABLE KEYS */;
-/*!40000 ALTER TABLE `report` ENABLE KEYS */;
+LOCK TABLES `ledger` WRITE;
+/*!40000 ALTER TABLE `ledger` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ledger` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
