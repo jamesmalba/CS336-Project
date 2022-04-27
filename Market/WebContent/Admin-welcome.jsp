@@ -11,6 +11,27 @@
 <body>
 <h1>Welcome Admin</h1>
 Hello <%=session.getAttribute("user")%> <br>
+
+	Create sales data report by
+	<br>
+	<form method = "get" action = "Records.jsp">
+	<input type = "radio" name = "command" value = "total"/>Total earnings.
+	<br>
+	<input type = "radio" name = "command" value = "item"/>Earnings per item.
+	<br>
+	<input type = "radio" name = "command" value = "type"/>Earnings  per item type.
+	<br>
+	<input type = "radio" name = "command" value = "user"/>Earnings per end-user.
+	<br>
+	<input type = "radio" name = "command" value = "best-selling"/>Best-selling items.
+	<br>
+	<input type = "radio" name = "command" value = "buyer"/>Best buyers.
+	<br>
+	<input type = "submit" value = "Create report"/>
+	
+	</form>
+	<br>
+
 	<a href="representative_register.jsp">Create customer representative account</a> <br> <br>
 	<a href='logout.jsp'>Log out</a>
 </body>
