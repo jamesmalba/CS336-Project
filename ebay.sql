@@ -490,10 +490,8 @@ DROP TABLE IF EXISTS `posts`;
 CREATE TABLE `posts` (
   `email` varchar(50) NOT NULL,
   `auctionId` int NOT NULL,
-  `seller` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`email`,`auctionId`),
   KEY `auctionId` (`auctionId`),
-  KEY `seller_idx` (`seller`),
   CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`email`) REFERENCES `user` (`email`),
   CONSTRAINT `posts_ibfk_2` FOREIGN KEY (`auctionId`) REFERENCES `auction` (`auctionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -505,7 +503,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES ('test@rutgers.edu',5,NULL);
+INSERT INTO `posts` VALUES ('test@rutgers.edu',5);
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -678,4 +676,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-04 15:22:50
+-- Dump completed on 2022-05-04 15:35:43
