@@ -43,29 +43,6 @@ INSERT INTO `administrator` VALUES (NULL,'qwe123','johndoe@gmail.com');
 UNLOCK TABLES;
 
 --
--- Table structure for table `apple`
---
-
-DROP TABLE IF EXISTS `apple`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `apple` (
-  `auctionId` int NOT NULL,
-  PRIMARY KEY (`auctionId`),
-  CONSTRAINT `apple_ibfk_1` FOREIGN KEY (`auctionId`) REFERENCES `smartphone` (`auctionId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `apple`
---
-
-LOCK TABLES `apple` WRITE;
-/*!40000 ALTER TABLE `apple` DISABLE KEYS */;
-/*!40000 ALTER TABLE `apple` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `assisted_by`
 --
 
@@ -117,7 +94,7 @@ CREATE TABLE `auction` (
 
 LOCK TABLES `auction` WRITE;
 /*!40000 ALTER TABLE `auction` DISABLE KEYS */;
-INSERT INTO `auction` VALUES (NULL,'2025-10-01 10:10:10',NULL,'johndoe@gmail.com',NULL,NULL,1,NULL),(NULL,NULL,NULL,'test@gmail.com',NULL,NULL,2,NULL),('2025-10-01 10:10:10','2025-10-01 10:10:10',NULL,'test@rutgers.edu',0,49,3,NULL),('2022-05-03 19:52:47','2025-10-01 10:10:10',NULL,'test@rutgers.edu',0,123,4,NULL),('2022-05-04 00:13:57','2024-10-02 12:11:11',NULL,'test@rutgers.edu',0,500,5,NULL);
+INSERT INTO `auction` VALUES (NULL,'2025-10-01 10:10:10',NULL,'johndoe@gmail.com',NULL,NULL,1,NULL),(NULL,NULL,NULL,'test@gmail.com',NULL,NULL,2,NULL),('2025-10-01 10:10:10','2025-10-01 10:10:10',NULL,'test@rutgers.edu',0,49,3,NULL),('2022-05-03 19:52:47','2025-10-01 10:10:10',NULL,'test@rutgers.edu',0,123,4,NULL),('2022-05-04 00:13:57','2024-10-02 12:11:11',NULL,'test@rutgers.edu',0,500,5,NULL),('2022-05-04 15:39:37','2024-01-23 12:20:40',NULL,'test@rutgers.edu',0,400,6,NULL);
 /*!40000 ALTER TABLE `auction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,26 +281,32 @@ LOCK TABLES `customer_rep` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `google`
+-- Table structure for table `electronics`
 --
 
-DROP TABLE IF EXISTS `google`;
+DROP TABLE IF EXISTS `electronics`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `google` (
-  `auctionId` int NOT NULL,
-  PRIMARY KEY (`auctionId`),
-  CONSTRAINT `google_ibfk_1` FOREIGN KEY (`auctionId`) REFERENCES `smartphone` (`auctionId`)
+CREATE TABLE `electronics` (
+  `name` varchar(50) DEFAULT NULL,
+  `color` varchar(40) DEFAULT NULL,
+  `scondition` varchar(20) DEFAULT NULL,
+  `auction_Id` int NOT NULL,
+  `brand` varchar(40) DEFAULT NULL,
+  `storagesize` varchar(40) DEFAULT NULL,
+  `dimensions` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`auction_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `google`
+-- Dumping data for table `electronics`
 --
 
-LOCK TABLES `google` WRITE;
-/*!40000 ALTER TABLE `google` DISABLE KEYS */;
-/*!40000 ALTER TABLE `google` ENABLE KEYS */;
+LOCK TABLES `electronics` WRITE;
+/*!40000 ALTER TABLE `electronics` DISABLE KEYS */;
+INSERT INTO `electronics` VALUES (NULL,NULL,NULL,1,NULL,NULL,NULL),('joe','pink','BN',3,NULL,NULL,NULL),('fda','fds','BrandNew',4,NULL,NULL,NULL),('iphone3','Forest green','BrandNew',5,NULL,NULL,NULL),('Iphone20','Blue','BrandNew',6,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `electronics` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -334,12 +317,12 @@ DROP TABLE IF EXISTS `holds`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `holds` (
-  `auctionId` int DEFAULT NULL,
-  `product_id` int NOT NULL,
-  PRIMARY KEY (`product_id`),
+  `auctionId` int NOT NULL,
+  `auction_Id` int NOT NULL,
+  PRIMARY KEY (`auction_Id`,`auctionId`),
   KEY `auctionId` (`auctionId`),
   CONSTRAINT `holds_ibfk_1` FOREIGN KEY (`auctionId`) REFERENCES `auction` (`auctionId`),
-  CONSTRAINT `holds_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `smartphone` (`auctionId`)
+  CONSTRAINT `holds_ibfk_2` FOREIGN KEY (`auction_Id`) REFERENCES `electronics` (`auction_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -350,6 +333,34 @@ CREATE TABLE `holds` (
 LOCK TABLES `holds` WRITE;
 /*!40000 ALTER TABLE `holds` DISABLE KEYS */;
 /*!40000 ALTER TABLE `holds` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `laptop`
+--
+
+DROP TABLE IF EXISTS `laptop`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `laptop` (
+  `auction_Id` int NOT NULL,
+  `cpu` varchar(50) DEFAULT NULL,
+  `gpu` varchar(50) DEFAULT NULL,
+  `storagetype` varchar(50) DEFAULT NULL,
+  `OS` varchar(50) DEFAULT NULL,
+  `ram` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`auction_Id`),
+  CONSTRAINT `laptop_ibfk_1` FOREIGN KEY (`auction_Id`) REFERENCES `electronics` (`auction_Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `laptop`
+--
+
+LOCK TABLES `laptop` WRITE;
+/*!40000 ALTER TABLE `laptop` DISABLE KEYS */;
+/*!40000 ALTER TABLE `laptop` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -435,52 +446,6 @@ LOCK TABLES `moderated_by` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `oneplus`
---
-
-DROP TABLE IF EXISTS `oneplus`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `oneplus` (
-  `auctionId` int NOT NULL,
-  PRIMARY KEY (`auctionId`),
-  CONSTRAINT `oneplus_ibfk_1` FOREIGN KEY (`auctionId`) REFERENCES `smartphone` (`auctionId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `oneplus`
---
-
-LOCK TABLES `oneplus` WRITE;
-/*!40000 ALTER TABLE `oneplus` DISABLE KEYS */;
-/*!40000 ALTER TABLE `oneplus` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `other`
---
-
-DROP TABLE IF EXISTS `other`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `other` (
-  `auctionId` int NOT NULL,
-  PRIMARY KEY (`auctionId`),
-  CONSTRAINT `other_ibfk_1` FOREIGN KEY (`auctionId`) REFERENCES `smartphone` (`auctionId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `other`
---
-
-LOCK TABLES `other` WRITE;
-/*!40000 ALTER TABLE `other` DISABLE KEYS */;
-/*!40000 ALTER TABLE `other` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `posts`
 --
 
@@ -503,7 +468,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES ('test@rutgers.edu',5);
+INSERT INTO `posts` VALUES ('test@rutgers.edu',5),('test@rutgers.edu',6);
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -562,29 +527,6 @@ LOCK TABLES `report` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `samsung`
---
-
-DROP TABLE IF EXISTS `samsung`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `samsung` (
-  `auctionId` int NOT NULL,
-  PRIMARY KEY (`auctionId`),
-  CONSTRAINT `samsung_ibfk_1` FOREIGN KEY (`auctionId`) REFERENCES `smartphone` (`auctionId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `samsung`
---
-
-LOCK TABLES `samsung` WRITE;
-/*!40000 ALTER TABLE `samsung` DISABLE KEYS */;
-/*!40000 ALTER TABLE `samsung` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `searches`
 --
 
@@ -618,11 +560,12 @@ DROP TABLE IF EXISTS `smartphone`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `smartphone` (
-  `name` varchar(50) DEFAULT NULL,
-  `color` varchar(40) DEFAULT NULL,
-  `scondition` varchar(10) DEFAULT NULL,
-  `auctionId` int NOT NULL,
-  PRIMARY KEY (`auctionId`)
+  `auction_Id` int NOT NULL,
+  `provider` varchar(50) DEFAULT NULL,
+  `cpu` varchar(50) DEFAULT NULL,
+  `connectivity` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`auction_Id`),
+  CONSTRAINT `smartphone_ibfk_1` FOREIGN KEY (`auction_Id`) REFERENCES `electronics` (`auction_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -632,8 +575,34 @@ CREATE TABLE `smartphone` (
 
 LOCK TABLES `smartphone` WRITE;
 /*!40000 ALTER TABLE `smartphone` DISABLE KEYS */;
-INSERT INTO `smartphone` VALUES (NULL,NULL,NULL,1),('joe','pink','BN',3),('fda','fds','BrandNew',4),('iphone3','Forest green','BrandNew',5);
 /*!40000 ALTER TABLE `smartphone` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tv`
+--
+
+DROP TABLE IF EXISTS `tv`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tv` (
+  `auction_Id` int NOT NULL,
+  `displaytech` varchar(50) DEFAULT NULL,
+  `resolution` varchar(50) DEFAULT NULL,
+  `audioinput` varchar(50) DEFAULT NULL,
+  `videoinput` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`auction_Id`),
+  CONSTRAINT `tv_ibfk_1` FOREIGN KEY (`auction_Id`) REFERENCES `electronics` (`auction_Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tv`
+--
+
+LOCK TABLES `tv` WRITE;
+/*!40000 ALTER TABLE `tv` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tv` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -676,4 +645,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-04 15:35:43
+-- Dump completed on 2022-05-04 18:14:44
