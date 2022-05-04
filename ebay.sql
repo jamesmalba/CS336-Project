@@ -51,7 +51,8 @@ DROP TABLE IF EXISTS `apple`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `apple` (
   `auctionId` int NOT NULL,
-  PRIMARY KEY (`auctionId`)
+  PRIMARY KEY (`auctionId`),
+  CONSTRAINT `apple_ibfk_1` FOREIGN KEY (`auctionId`) REFERENCES `smartphone` (`auctionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -61,7 +62,6 @@ CREATE TABLE `apple` (
 
 LOCK TABLES `apple` WRITE;
 /*!40000 ALTER TABLE `apple` DISABLE KEYS */;
-INSERT INTO `apple` VALUES (1),(3);
 /*!40000 ALTER TABLE `apple` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,7 +107,7 @@ CREATE TABLE `auction` (
   `min_price` double DEFAULT NULL,
   `auctionId` int NOT NULL,
   `sale_price` decimal(19,2) DEFAULT NULL,
-  PRIMARY KEY (`auctionId`,`seller`)
+  PRIMARY KEY (`auctionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -129,11 +129,11 @@ DROP TABLE IF EXISTS `auctionbuyer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `auctionbuyer` (
-  `auctionId` int NOT NULL,
+  `auction_Id` int NOT NULL,
   `min_bid` decimal(19,2) DEFAULT NULL,
   `min_increment` decimal(19,2) DEFAULT NULL,
-  `bidder` varchar(50) NOT NULL,
-  PRIMARY KEY (`auctionId`,`bidder`)
+  `bidder` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`auction_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -181,13 +181,12 @@ DROP TABLE IF EXISTS `bidsin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bidsin` (
-  `bidder` varchar(50) DEFAULT NULL,
-  `auctionid` int DEFAULT NULL,
+  `auction_id` int NOT NULL,
   `email` varchar(50) NOT NULL,
-  PRIMARY KEY (`email`),
-  KEY `auctionid` (`auctionid`,`bidder`),
+  PRIMARY KEY (`email`,`auction_id`),
+  KEY `auction_id` (`auction_id`),
   CONSTRAINT `bidsin_ibfk_1` FOREIGN KEY (`email`) REFERENCES `user` (`email`),
-  CONSTRAINT `bidsin_ibfk_2` FOREIGN KEY (`auctionid`, `bidder`) REFERENCES `auctionbuyer` (`auctionId`, `bidder`)
+  CONSTRAINT `bidsin_ibfk_2` FOREIGN KEY (`auction_id`) REFERENCES `auctionbuyer` (`auction_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -208,14 +207,12 @@ DROP TABLE IF EXISTS `bidsto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bidsto` (
-  `bidder` varchar(50) DEFAULT NULL,
-  `seller` varchar(50) DEFAULT NULL,
   `auctionId` int NOT NULL,
-  PRIMARY KEY (`auctionId`),
-  KEY `auctionId` (`auctionId`,`seller`),
-  KEY `auctionId_2` (`auctionId`,`bidder`),
-  CONSTRAINT `bidsto_ibfk_1` FOREIGN KEY (`auctionId`, `seller`) REFERENCES `auction` (`auctionId`, `seller`),
-  CONSTRAINT `bidsto_ibfk_2` FOREIGN KEY (`auctionId`, `bidder`) REFERENCES `auctionbuyer` (`auctionId`, `bidder`)
+  `auction_Id` int NOT NULL,
+  PRIMARY KEY (`auctionId`,`auction_Id`),
+  KEY `auction_Id` (`auction_Id`),
+  CONSTRAINT `bidsto_ibfk_1` FOREIGN KEY (`auction_Id`) REFERENCES `auctionbuyer` (`auction_Id`),
+  CONSTRAINT `bidsto_ibfk_2` FOREIGN KEY (`auctionId`) REFERENCES `auction` (`auctionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -681,4 +678,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-04  1:28:02
+-- Dump completed on 2022-05-04 15:22:50
