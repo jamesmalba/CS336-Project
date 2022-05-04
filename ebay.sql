@@ -579,30 +579,30 @@ LOCK TABLES `smartphone` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tv`
+-- Table structure for table `tablet`
 --
 
-DROP TABLE IF EXISTS `tv`;
+DROP TABLE IF EXISTS `tablet`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tv` (
+CREATE TABLE `tablet` (
   `auction_Id` int NOT NULL,
-  `displaytech` varchar(50) DEFAULT NULL,
+  `displaytype` varchar(50) DEFAULT NULL,
   `resolution` varchar(50) DEFAULT NULL,
-  `audioinput` varchar(50) DEFAULT NULL,
-  `videoinput` varchar(50) DEFAULT NULL,
+  `os` varchar(50) DEFAULT NULL,
+  `inputmethod` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`auction_Id`),
   CONSTRAINT `tv_ibfk_1` FOREIGN KEY (`auction_Id`) REFERENCES `electronics` (`auction_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tv`
+-- Dumping data for table `tablet`
 --
 
-LOCK TABLES `tv` WRITE;
-/*!40000 ALTER TABLE `tv` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tv` ENABLE KEYS */;
+LOCK TABLES `tablet` WRITE;
+/*!40000 ALTER TABLE `tablet` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tablet` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -645,4 +645,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-04 18:14:44
+-- Dump completed on 2022-05-04 18:24:54
