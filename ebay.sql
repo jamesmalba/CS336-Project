@@ -84,6 +84,7 @@ CREATE TABLE `auction` (
   `min_price` double DEFAULT NULL,
   `auctionId` int NOT NULL,
   `sale_price` decimal(19,2) DEFAULT NULL,
+  `minbidincrement` decimal(19,2) DEFAULT NULL,
   PRIMARY KEY (`auctionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -94,7 +95,7 @@ CREATE TABLE `auction` (
 
 LOCK TABLES `auction` WRITE;
 /*!40000 ALTER TABLE `auction` DISABLE KEYS */;
-INSERT INTO `auction` VALUES (NULL,'2025-10-01 10:10:10',NULL,'johndoe@gmail.com',NULL,NULL,1,NULL),(NULL,NULL,NULL,'test@gmail.com',NULL,NULL,2,NULL),('2025-10-01 10:10:10','2025-10-01 10:10:10',NULL,'test@rutgers.edu',0,49,3,NULL),('2022-05-03 19:52:47','2025-10-01 10:10:10',NULL,'test@rutgers.edu',0,123,4,NULL),('2022-05-04 00:13:57','2024-10-02 12:11:11',NULL,'test@rutgers.edu',0,500,5,NULL),('2022-05-04 15:39:37','2024-01-23 12:20:40',NULL,'test@rutgers.edu',0,400,6,NULL),('2022-05-04 20:17:47','2025-06-07 12:19:29',NULL,'test@rutgers.edu',0,900,7,NULL);
+INSERT INTO `auction` VALUES (NULL,'2025-10-01 10:10:10',NULL,'johndoe@gmail.com',NULL,NULL,1,NULL,NULL),(NULL,NULL,NULL,'test@gmail.com',NULL,NULL,2,NULL,NULL),('2025-10-01 10:10:10','2025-10-01 10:10:10',NULL,'test@rutgers.edu',0,49,3,NULL,NULL),('2022-05-03 19:52:47','2025-10-01 10:10:10',NULL,'test@rutgers.edu',0,123,4,NULL,NULL),('2022-05-04 00:13:57','2024-10-02 12:11:11',NULL,'test@rutgers.edu',0,500,5,NULL,NULL),('2022-05-04 15:39:37','2024-01-23 12:20:40',NULL,'test@rutgers.edu',0,400,6,NULL,NULL),('2022-05-04 20:17:47','2025-06-07 12:19:29',NULL,'test@rutgers.edu',0,900,7,NULL,NULL);
 /*!40000 ALTER TABLE `auction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,7 +108,6 @@ DROP TABLE IF EXISTS `auctionbuyer`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `auctionbuyer` (
   `auction_Id` int NOT NULL,
-  `min_bid` decimal(19,2) DEFAULT NULL,
   `min_increment` decimal(19,2) DEFAULT NULL,
   `bidder` varchar(50) DEFAULT NULL,
   `autolimit` decimal(19,2) DEFAULT NULL,
@@ -648,4 +648,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-04 21:16:11
+-- Dump completed on 2022-05-05  1:38:00
