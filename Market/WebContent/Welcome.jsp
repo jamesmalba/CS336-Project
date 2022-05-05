@@ -13,5 +13,7 @@
 Hello <%=session.getAttribute("user")%> <br>
 	<h2>What to do?</h2>
 	<a href='logout.jsp'>Log out</a>
+	<br>
+	<a href='Browse.jsp'>Browse auction items</a>
 </body>
 </html>
