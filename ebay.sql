@@ -94,7 +94,7 @@ CREATE TABLE `auction` (
 
 LOCK TABLES `auction` WRITE;
 /*!40000 ALTER TABLE `auction` DISABLE KEYS */;
-INSERT INTO `auction` VALUES (NULL,'2025-10-01 10:10:10',NULL,'johndoe@gmail.com',NULL,NULL,1,NULL),(NULL,NULL,NULL,'test@gmail.com',NULL,NULL,2,NULL),('2025-10-01 10:10:10','2025-10-01 10:10:10',NULL,'test@rutgers.edu',0,49,3,NULL),('2022-05-03 19:52:47','2025-10-01 10:10:10',NULL,'test@rutgers.edu',0,123,4,NULL),('2022-05-04 00:13:57','2024-10-02 12:11:11',NULL,'test@rutgers.edu',0,500,5,NULL),('2022-05-04 15:39:37','2024-01-23 12:20:40',NULL,'test@rutgers.edu',0,400,6,NULL);
+INSERT INTO `auction` VALUES (NULL,'2025-10-01 10:10:10',NULL,'johndoe@gmail.com',NULL,NULL,1,NULL),(NULL,NULL,NULL,'test@gmail.com',NULL,NULL,2,NULL),('2025-10-01 10:10:10','2025-10-01 10:10:10',NULL,'test@rutgers.edu',0,49,3,NULL),('2022-05-03 19:52:47','2025-10-01 10:10:10',NULL,'test@rutgers.edu',0,123,4,NULL),('2022-05-04 00:13:57','2024-10-02 12:11:11',NULL,'test@rutgers.edu',0,500,5,NULL),('2022-05-04 15:39:37','2024-01-23 12:20:40',NULL,'test@rutgers.edu',0,400,6,NULL),('2022-05-04 20:17:47','2025-06-07 12:19:29',NULL,'test@rutgers.edu',0,900,7,NULL);
 /*!40000 ALTER TABLE `auction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,6 +110,7 @@ CREATE TABLE `auctionbuyer` (
   `min_bid` decimal(19,2) DEFAULT NULL,
   `min_increment` decimal(19,2) DEFAULT NULL,
   `bidder` varchar(50) DEFAULT NULL,
+  `autolimit` decimal(19,2) DEFAULT NULL,
   PRIMARY KEY (`auction_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -305,7 +306,7 @@ CREATE TABLE `electronics` (
 
 LOCK TABLES `electronics` WRITE;
 /*!40000 ALTER TABLE `electronics` DISABLE KEYS */;
-INSERT INTO `electronics` VALUES (NULL,NULL,NULL,1,NULL,NULL,NULL),('joe','pink','BN',3,NULL,NULL,NULL),('fda','fds','BrandNew',4,NULL,NULL,NULL),('iphone3','Forest green','BrandNew',5,NULL,NULL,NULL),('Iphone20','Blue','BrandNew',6,NULL,NULL,NULL);
+INSERT INTO `electronics` VALUES (NULL,NULL,NULL,1,NULL,NULL,NULL),('joe','pink','BN',3,NULL,NULL,NULL),('fda','fds','BrandNew',4,NULL,NULL,NULL),('iphone3','Forest green','BrandNew',5,NULL,NULL,NULL),('Iphone20','Blue','BrandNew',6,NULL,NULL,NULL),('iphone13','Forest Green','Broken',7,'Apple','128gb','12in');
 /*!40000 ALTER TABLE `electronics` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,6 +333,7 @@ CREATE TABLE `holds` (
 
 LOCK TABLES `holds` WRITE;
 /*!40000 ALTER TABLE `holds` DISABLE KEYS */;
+INSERT INTO `holds` VALUES (7,7);
 /*!40000 ALTER TABLE `holds` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -468,7 +470,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES ('test@rutgers.edu',5),('test@rutgers.edu',6);
+INSERT INTO `posts` VALUES ('test@rutgers.edu',5),('test@rutgers.edu',6),('test@rutgers.edu',7);
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -575,6 +577,7 @@ CREATE TABLE `smartphone` (
 
 LOCK TABLES `smartphone` WRITE;
 /*!40000 ALTER TABLE `smartphone` DISABLE KEYS */;
+INSERT INTO `smartphone` VALUES (7,'ATT','Pentioni5','Lightning');
 /*!40000 ALTER TABLE `smartphone` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -645,4 +648,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-04 18:24:54
+-- Dump completed on 2022-05-04 21:16:11
