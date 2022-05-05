@@ -17,6 +17,8 @@
 			String pass = request.getParameter("upass");
 			String email = request.getParameter("email");
 			String passc = request.getParameter("upassc");
+			String dob = request.getParameter("dob");
+			String addr = request.getParameter("address");
 			
 			if(!pass.equals(passc)){
 		    	out.println("Password and confirm password have to match.");
@@ -29,12 +31,14 @@
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root", "Qwe123456");		
 			
 			Statement stmt = con.createStatement();
-			String insert = "INSERT INTO user(name,password,email)" + "VALUES (?, ?, ?)";
+			String insert = "INSERT INTO user(name,password,email,dob,address)" + "VALUES (?, ?, ?, ?,?)";
 			PreparedStatement ps = con.prepareStatement(insert);
 			
 			ps.setString(1, name);
 			ps.setString(2, pass);
 			ps.setString(3, email);
+			ps.setString(4, dob);
+			ps.setString(5, addr);
 			//Run the query against the DB
 			ps.executeUpdate();
 			//parse out the results

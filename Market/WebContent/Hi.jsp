@@ -9,13 +9,15 @@
 <title>Login page</title>
 </head>
 <body>
-<h1>Welcome to Ebay</h1>
+<h1>Welcome to BuyMe</h1>
 	
 	<h2>User Login</h2>
 	<form action="Login.jsp" method="post">
-		Username (Email): <input type= text name="uname"> <br><br>
-		Password: <input type= text name="upass"><br>
-		<input type="submit" value="Submit">
+	<table>
+		<tr><td>Username (Email):</td> <td> <input type= text name="uname"> </td> </tr>
+		<tr><td>Password:</td> <td> <input type= text name="upass"> </td> </tr>
+	</table>
+	<input type="submit" value="Submit">
 	</form>
 	
 	<br> 

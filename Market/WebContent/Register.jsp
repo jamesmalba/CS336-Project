@@ -9,11 +9,18 @@
 <body>
 <h1>Register Here</h1>
 <form action="Registered.jsp" method="post">
-	Email: <input type= text name="email"> <br> <br>
-	Full Name: <input type= text name="uname"> <br> <br>
-	Password: <input type= text name="upass"> <br> <br>
-	Confirm Password: <input type= text name="upassc"> <br> <br>
-	<input type="submit" value="Submit">
-	</form>
+<table>
+	<tr><td>Email:</td> <td><input type= text name="email"></td> </tr>
+	<tr><td>Full Name:</td> <td> <input type= text name="uname"> </td> </tr>
+	<tr><td>Date of Birth: (YYYY/MM/DD)</td> <td> <input type= text name="dob"> </td> </tr>
+	<tr><td>Address:</td> <td> <input type= text name="address"> </td> </tr>
+	<tr><td>Password:</td> <td> <input type= text name="upass"> </td> </tr>
+	<tr><td>Confirm Password:</td> <td> <input type= text name="upassc"> </td> </tr>
+</table> <br>
+	
+<input type="submit" value="Submit">
+	
+</form>
+	
 </body>
 </html>
