@@ -46,5 +46,7 @@ Hello <%=session.getAttribute("user")%> <br>
 	<a href='uchange.jsp'>Want to add/change credentials?</a>
 	<br>
 	<a href='logout.jsp'>Log out</a>
+	<br>
+	<a href='Browse.jsp'>Browse auction items</a>
 </body>
 </html>

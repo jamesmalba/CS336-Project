@@ -95,7 +95,11 @@ CREATE TABLE `auction` (
 
 LOCK TABLES `auction` WRITE;
 /*!40000 ALTER TABLE `auction` DISABLE KEYS */;
+<<<<<<< HEAD
 INSERT INTO `auction` VALUES (NULL,'2025-10-01 10:10:10','bid@gmail.com','johndoe@gmail.com',310000,NULL,1,NULL,NULL),(NULL,NULL,NULL,'test@gmail.com',NULL,NULL,2,NULL,NULL),('2025-10-01 10:10:10','2025-10-01 10:10:10',NULL,'test@rutgers.edu',0,49,3,NULL,NULL),('2022-05-03 19:52:47','2025-10-01 10:10:10',NULL,'test@rutgers.edu',0,123,4,NULL,NULL),('2022-05-04 00:13:57','2024-10-02 12:11:11',NULL,'test@rutgers.edu',0,500,5,NULL,NULL),('2022-05-04 15:39:37','2024-01-23 12:20:40',NULL,'test@rutgers.edu',0,400,6,NULL,NULL),('2022-05-04 20:17:47','2025-06-07 12:19:29',NULL,'test@rutgers.edu',0,900,7,NULL,NULL),('2022-05-05 02:53:12','2024-10-24 10:10:20',NULL,'bid@gmail.com',0,100,8,NULL,10.00);
+=======
+INSERT INTO `auction` VALUES (NULL,'2025-10-01 10:10:10',NULL,'johndoe@gmail.com',NULL,NULL,1,NULL,NULL),(NULL,NULL,NULL,'test@gmail.com',NULL,NULL,2,NULL,NULL),('2025-10-01 10:10:10','2025-10-01 10:10:10',NULL,'test@rutgers.edu',0,49,3,NULL,NULL),('2022-05-03 19:52:47','2025-10-01 10:10:10',NULL,'test@rutgers.edu',0,123,4,NULL,NULL),('2022-05-04 00:13:57','2024-10-02 12:11:11',NULL,'test@rutgers.edu',0,500,5,NULL,NULL),('2022-05-04 15:39:37','2024-01-23 12:20:40',NULL,'test@rutgers.edu',0,400,6,NULL,NULL),('2022-05-04 20:17:47','2025-06-07 12:19:29',NULL,'test@rutgers.edu',0,900,7,NULL,NULL);
+>>>>>>> refs/remotes/origin/main
 /*!40000 ALTER TABLE `auction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,6 +113,7 @@ DROP TABLE IF EXISTS `auctionbuyer`;
 CREATE TABLE `auctionbuyer` (
   `auction_Id` int NOT NULL,
   `min_increment` decimal(19,2) DEFAULT NULL,
+<<<<<<< HEAD
   `bidder` varchar(50) NOT NULL,
   `autolimit` decimal(19,2) DEFAULT NULL,
   `bidamount` decimal(19,2) DEFAULT NULL,
@@ -123,6 +128,20 @@ CREATE TABLE `auctionbuyer` (
 LOCK TABLES `auctionbuyer` WRITE;
 /*!40000 ALTER TABLE `auctionbuyer` DISABLE KEYS */;
 INSERT INTO `auctionbuyer` VALUES (1,0.00,'bid@gmail.com',0.00,310000.00),(2,0.00,'test@gmail.com',0.00,NULL),(3,0.00,'bid@gmail.com',0.00,1999.00),(4,0.00,'bid@gmail.com',0.00,10000.00),(6,0.00,'bid@gmail.com',0.00,NULL),(7,0.00,'test@rutgers.edu',0.00,NULL),(8,0.00,'test@rutgers.edu',0.00,400.00);
+=======
+  `bidder` varchar(50) DEFAULT NULL,
+  `autolimit` decimal(19,2) DEFAULT NULL,
+  PRIMARY KEY (`auction_Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auctionbuyer`
+--
+
+LOCK TABLES `auctionbuyer` WRITE;
+/*!40000 ALTER TABLE `auctionbuyer` DISABLE KEYS */;
+>>>>>>> refs/remotes/origin/main
 /*!40000 ALTER TABLE `auctionbuyer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,6 +182,7 @@ DROP TABLE IF EXISTS `bidsin`;
 CREATE TABLE `bidsin` (
   `auction_id` int NOT NULL,
   `email` varchar(50) NOT NULL,
+<<<<<<< HEAD
   `bidder` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`email`),
   KEY `bidsin_ibfk_2` (`auction_id`,`bidder`),
@@ -206,6 +226,47 @@ CREATE TABLE `bidsto` (
 LOCK TABLES `bidsto` WRITE;
 /*!40000 ALTER TABLE `bidsto` DISABLE KEYS */;
 INSERT INTO `bidsto` VALUES (1,1,'bid@gmail.com');
+=======
+  PRIMARY KEY (`email`,`auction_id`),
+  KEY `auction_id` (`auction_id`),
+  CONSTRAINT `bidsin_ibfk_1` FOREIGN KEY (`email`) REFERENCES `user` (`email`),
+  CONSTRAINT `bidsin_ibfk_2` FOREIGN KEY (`auction_id`) REFERENCES `auctionbuyer` (`auction_Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bidsin`
+--
+
+LOCK TABLES `bidsin` WRITE;
+/*!40000 ALTER TABLE `bidsin` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bidsin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bidsto`
+--
+
+DROP TABLE IF EXISTS `bidsto`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `bidsto` (
+  `auctionId` int NOT NULL,
+  `auction_Id` int NOT NULL,
+  PRIMARY KEY (`auctionId`,`auction_Id`),
+  KEY `auction_Id` (`auction_Id`),
+  CONSTRAINT `bidsto_ibfk_1` FOREIGN KEY (`auction_Id`) REFERENCES `auctionbuyer` (`auction_Id`),
+  CONSTRAINT `bidsto_ibfk_2` FOREIGN KEY (`auctionId`) REFERENCES `auction` (`auctionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bidsto`
+--
+
+LOCK TABLES `bidsto` WRITE;
+/*!40000 ALTER TABLE `bidsto` DISABLE KEYS */;
+>>>>>>> refs/remotes/origin/main
 /*!40000 ALTER TABLE `bidsto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,7 +373,11 @@ CREATE TABLE `electronics` (
 
 LOCK TABLES `electronics` WRITE;
 /*!40000 ALTER TABLE `electronics` DISABLE KEYS */;
+<<<<<<< HEAD
 INSERT INTO `electronics` VALUES (NULL,NULL,NULL,1,NULL,NULL,NULL),('joe','pink','BN',3,NULL,NULL,NULL),('fda','fds','BrandNew',4,NULL,NULL,NULL),('iphone3','Forest green','BrandNew',5,NULL,NULL,NULL),('Iphone20','Blue','BrandNew',6,NULL,NULL,NULL),('iphone13','Forest Green','Broken',7,'Apple','128gb','12in'),('testphone','green','Opened',8,'Apple','100gb','10in');
+=======
+INSERT INTO `electronics` VALUES (NULL,NULL,NULL,1,NULL,NULL,NULL),('joe','pink','BN',3,NULL,NULL,NULL),('fda','fds','BrandNew',4,NULL,NULL,NULL),('iphone3','Forest green','BrandNew',5,NULL,NULL,NULL),('Iphone20','Blue','BrandNew',6,NULL,NULL,NULL),('iphone13','Forest Green','Broken',7,'Apple','128gb','12in');
+>>>>>>> refs/remotes/origin/main
 /*!40000 ALTER TABLE `electronics` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -339,7 +404,11 @@ CREATE TABLE `holds` (
 
 LOCK TABLES `holds` WRITE;
 /*!40000 ALTER TABLE `holds` DISABLE KEYS */;
+<<<<<<< HEAD
 INSERT INTO `holds` VALUES (7,7),(8,8);
+=======
+INSERT INTO `holds` VALUES (7,7);
+>>>>>>> refs/remotes/origin/main
 /*!40000 ALTER TABLE `holds` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -476,7 +545,11 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
+<<<<<<< HEAD
 INSERT INTO `posts` VALUES ('test@rutgers.edu',5),('test@rutgers.edu',6),('test@rutgers.edu',7),('bid@gmail.com',8);
+=======
+INSERT INTO `posts` VALUES ('test@rutgers.edu',5),('test@rutgers.edu',6),('test@rutgers.edu',7);
+>>>>>>> refs/remotes/origin/main
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -583,7 +656,11 @@ CREATE TABLE `smartphone` (
 
 LOCK TABLES `smartphone` WRITE;
 /*!40000 ALTER TABLE `smartphone` DISABLE KEYS */;
+<<<<<<< HEAD
 INSERT INTO `smartphone` VALUES (7,'ATT','Pentioni5','Lightning'),(8,'verision','1020','fjdsa');
+=======
+INSERT INTO `smartphone` VALUES (7,'ATT','Pentioni5','Lightning');
+>>>>>>> refs/remotes/origin/main
 /*!40000 ALTER TABLE `smartphone` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -654,4 +731,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
 -- Dump completed on 2022-05-05  3:14:33
+=======
+-- Dump completed on 2022-05-05  1:38:00
+>>>>>>> refs/remotes/origin/main
