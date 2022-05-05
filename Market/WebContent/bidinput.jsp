@@ -15,6 +15,7 @@
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root", "Qwe123456");		
 			Statement stmt = con.createStatement();
+			ResultSet rn;
 			//Declaring variables
 			String bidder = (String)session.getAttribute("user");
 			float bidamount = Float.valueOf(request.getParameter("bidamount"));
@@ -30,8 +31,19 @@
 			float currentBid = 0; 
 			float minBid = 0;
 			
+			String existbidder = null; 
+			
+			rn = stmt.executeQuery("select a.bidder from auctionbuyer a where a.auction_Id = "+newAuctionId+" and a.bidder = '"+bidder+"';");
+		    while (rn.next()) {
+		    	existbidder = rn.getString("a.bidder");
+		    }
+			if(existbidder != null){
+		    	out.println("You already have an existing bid on the item (AuctionID: "+newAuctionId+")");
+		    	out.println("<a href='bid.jsp'>Go back</a>");
+		    	return;
+		    }
+			
 			//take current info on auction
-			ResultSet rn;
 		    rn = stmt.executeQuery("select a.minbidincrement,a.current_bid from auction a where a.auctionId = "+newAuctionId+";");
 		    while (rn.next()) {
 		    	minbidincrement = rn.getFloat("a.minbidincrement");
