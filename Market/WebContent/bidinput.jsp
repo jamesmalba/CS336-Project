@@ -88,11 +88,11 @@
 				
 				
 				insert = "INSERT INTO bidsIn(email, auction_id,bidder)"
-						+ "VALUES (?, ?)";
+						+ "VALUES (?, ?, ?)";
 				ps = con.prepareStatement(insert);
 				ps.setString(1, bidder);
 				ps.setFloat(2, newAuctionId);
-				ps.setFloat(3, bidder);
+				ps.setString(3, bidder);
 				ps.executeUpdate();
 				
 				insert = "INSERT INTO bidsTo(bidder, auction_id, auctionid)"
@@ -114,10 +114,15 @@
 		    //queries for all autobidders participating in the same auction
 		    
 		    //gets highest possible bid
+		    float smax = 0; 
 		    rn = stmt.executeQuery("select MAX(a.autolimit) from auctionbuyer a where a.auction_id = "+newAuctionId+";"); //and NOT a.bidder = '"+bidder+"' might need
 		   	while (rn.next()) {
 			   malimit = rn.getFloat("MAX(a.autolimit)");
 		   	}
+		   	rn = stmt.executeQuery("SELECT MAX(a.autolimit) FROM auctionbuyer a WHERE a.auction_id = "+newAuctionId+" and a.autolimit < (SELECT MAX(a.autolimit) FROM auctionbuyer a where a.auction_id = "+newAuctionId+");");
+		   	while (rn.next()) {
+				   smax = rn.getFloat("MAX(a.autolimit)");
+			}
 		   	//goes through each bidder 					
 		    String currenthighestbidder = null;
    			float currentmax = 0;
@@ -134,11 +139,18 @@
 		    		bidincre = rn.getFloat("min_increment");
 		    		bbidamount = rn.getFloat("bidamount");
 		    		String bbidder = rn.getString("bidder");
-		    		while (malimit > bbidamount && bidlimits >= bbidamount) {
-		    			bbidamount += bidincre; 
+		    		if (malimit != bidlimits) {
+		    			while (malimit > bbidamount && bidlimits > bbidamount) {
+			    			bbidamount += bidincre; 
+			    		}
 		    		}
+		    		if (malimit == bidlimits && bidlimits >= (smax + bidincre))  {
+		    			bbidamount = smax + bidincre;
+		    		}
+		    		
 		    		bdog = stmt2.executeUpdate("UPDATE auctionbuyer set bidamount = "+bbidamount+" where auction_id = "+newAuctionId+" and bidder = '"+bbidder+"';");
 		    	}
+		   
 		    }		
 		   
 		   	rn = stmt.executeQuery("select a.bidder, MAX(bidamount) from auctionbuyer a where a.auction_id = "+newAuctionId+";");
