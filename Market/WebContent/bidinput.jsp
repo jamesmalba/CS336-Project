@@ -111,7 +111,7 @@
 		    		while (bidlimits > malimit) {
 		    			bbidamount += bidincre; 
 		    		}
-		    		bdog = stmt2.executeUpdate("UPDATE auctionbuyer set bidamount = "+bidamount+" where auction_id = 9 and bidder = "+bbidder+"");
+		    		bdog = stmt2.executeUpdate("UPDATE auctionbuyer set bidamount = "+bidamount+" where auction_id = "+newAuctionId+" and bidder = "+bbidder+"");
 		    	}
 		    }		
 		   
