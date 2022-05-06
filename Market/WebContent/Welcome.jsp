@@ -32,13 +32,28 @@ Hello <%=session.getAttribute("user")%> <br>
 			<td>Want to buy something?</td>
 			<td>
 				<form action="Ubuy.jsp" method="post">
+				<input type="submit" value="Buy"> 
+				</form>
+			</td>
+		</tr>
+		<tr></tr>
+		<tr>
+			<td><a href='bids.jsp'>Want to see your bids?</a></td>
+		</tr>
+		<tr></tr>
+		<tr>    
+			<td><a href='bidwinner.jsp'>See all bid winners here</a></td>
+		</tr>
+		
+		<tr>    
+			<td>Browse auction items</td>
+			<td>
+				<form action="Search.jsp" method="post">
 				<input type="submit" value="Search"> 
 				</form>
 			</td>
 		</tr>
-		<tr>    
-			<td><a href='bids.jsp'>Want to see your bids?</a></td>
-		</tr>
+		
 	</table>
 	<br><br>
 
@@ -47,6 +62,5 @@ Hello <%=session.getAttribute("user")%> <br>
 	<br>
 	<a href='logout.jsp'>Log out</a>
 	<br>
-	<a href='Browse.jsp'>Browse auction items</a>
 </body>
 </html>
