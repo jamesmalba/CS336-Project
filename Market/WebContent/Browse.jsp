@@ -16,7 +16,32 @@
         ResultSet rs;
         if(entity==null)
         {
-        	 rs=st.executeQuery("Select S.name, A.current_bid From smartphone S, auction A, holds h Where A.auctionID=h.auctionID AND h.product_id=S.product_id;");
+        	 rs=st.executeQuery("select * from auction,electronics where auction.auctionID=electronics.auction_ID;");
+        }
+        else if(entity.equals("name"))
+        {
+        	rs=st.executeQuery("select * from auction,electronics where auction.auctionID=electronics.auction_ID Order by(electronics.name);");
+        }
+        else if(entity.equals("zname"))
+        {
+        	rs=st.executeQuery("select * from auction,electronics where auction.auctionID=electronics.auction_ID Order by(electronics.name) DESC;");
+        }
+        else if(entity.equals("shprice"))
+        {
+        	rs=st.executeQuery("select * from auction,electronics where auction.auctionID=electronics.auction_ID Order by(auction.sale_price) DESC;");
+        }
+        else if(entity.equals("slprice"))
+        {
+        	rs=st.executeQuery("select * from auction,electronics where auction.auctionID=electronics.auction_ID Order by(auction.sale_price);");
+        }
+        else if(entity.equals("mhprice"))
+        {
+        	rs=st.executeQuery("select * from auction,electronics where auction.auctionID=electronics.auction_ID Order by(auction.current_bid) DESC;");
+        }
+        else if(entity.equals("mlprice"))
+        {
+        	rs=st.executeQuery("select * from auction,electronics where auction.auctionID=electronics.auction_ID Order by(auction.current_bid);");
+        	System.out.println("ok");
         }
         else
         {
@@ -26,17 +51,31 @@
     %><table border=1 align=center style="text-align:center">
       <thead>
           <tr>
-             <th>Name</th>
-              <th>current bid</th>
+               <td>Name</td>
+			<td>Brand</td>
+			<td>Condition</td>
+			<td>Current Bid</td>
+			<td>Expiration Date/Time</td>
+			<td>Seller</td>
+			<td>AuctionId</td>
+			<td>Buy it now</td>
           </tr>
       </thead>
       <tbody>
+      
         <%while(rs.next())
         {
             %>
             <tr>
-                <td><%=rs.getString("name") %></td>
-              	<td><%=rs.getString("current_bid") %></td>
+               <td><%= rs.getString("name") %></td>
+					<td><%= rs.getString("Brand") %></td>
+					<td><%= rs.getString("scondition") %></td>
+					<td><%= rs.getString("current_bid") %></td>
+					<td><%= rs.getString("expdate") %></td>
+					<td><%= rs.getString("seller") %></td>
+					<td><%= rs.getString("auctionId") %></td>
+					<td><%= rs.getString("sale_price") %></td>
+              	
             </tr>
             <%}%>
             
@@ -52,14 +91,27 @@
     
 <form method="post" action="Browse.jsp">
 Sort by <select name="Sort by">
-    <option value="name">name A-Z</option>
-    <option vale="zname">name Z-A</option>
-    <option value="lprice">price-high to low</option> 
-    <option value="lprice">price-low to high</option> 
-    <option value="hprice">type</option> 
+    <option value="name">Product Name A-Z</option>
+    <option vale="zname">Product Name Z-A</option>
+    <option value="shprice">sale_price-high to low</option> 
+    <option value="slprice">sale_price-low to high</option>  
+     <option value="mhprice">Current_bid-high to low</option> 
+    <option value="mlprice">Current_bid-low to high</option> 
 </select>
 <input type="submit" value="load" />
 </form>
+<br>
+Search for Bid history
+<form method="post" action="Search.jsp">
+	<td>AuctionID </td><td><input type="text" name="history"></td>
+<input type="submit" value="Search" />
+</form>
+Search for User History
+<form method="post" action="Suser.jsp">
+	<td>User name </td><td><input type="text" name="name"></td>
+<input type="submit" value="Search" />
+</form>
+
 <script>
 
 </script>
