@@ -17,27 +17,28 @@
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root", "Qwe123456");		
 			Statement stmt = con.createStatement();
 			String user = (String)session.getAttribute("user");
-			String str = "select * from auction a, user u, posts p where u.email = '" + user + "' and u.email = p.email and p.auctionId = a.auctionId; ";
+			String str = "select * from auctionbuyer a where a.bidder = '" + user + "';";
 			ResultSet result = stmt.executeQuery(str);
+			
 		%>
 			
 		<!--  Make an HTML table to show the results in: -->
 	<table>
 		<tr>    
 			<td>AuctionID</td>
-			<td>Name</td>
-			<td>Current Bid</td>
-			<td>Expiration Date/Time</td>
-			<td>Item Name</td>
+			<td>Your Bid</td>
+			<td>Auto Limit</td>
+			<td>Auto Increment</td>
 		</tr>
 			<%
 			//parse out the results
-			while (result.next() ) { %>
+			while (result.next() ) { 
+			%>
 				<tr>    
-					<td><%= result.getString("auctionId") %></td>
-					<td><%= result.getString("name") %></td>
-					<td><%= result.getString("current_bid") %></td>
-					<td><%= result.getString("expdate") %></td>
+					<td><%= result.getString("auction_Id") %></td>
+					<td><%= result.getString("bidamount") %></td>
+					<td><%= result.getString("autolimit") %></td>
+					<td><%= result.getString("min_increment") %></td>
 					
 				</tr>
 				

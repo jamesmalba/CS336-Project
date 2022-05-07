@@ -74,7 +74,7 @@
 	<br>
 	<br>
 	<br>
-	Bids that have gone through your upper limit
+	<h3>Bids that have gone through your upper limit</h3>
 			<table>
 			<tr>    
 				<td>Name</td>
@@ -109,6 +109,7 @@
 			} %>
 			
 		</table>
+		<h3>Items you set an alert for</h3>
 		<br><br><br>
 		<a href='bid.jsp'>Bid again</a>
 		<br><br>
