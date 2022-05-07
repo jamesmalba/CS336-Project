@@ -12,8 +12,7 @@
     try
     {
         Class.forName("com.mysql.jdbc.Driver");
-        Connection con=(Connection)DriverManager.getConnection(
-            "jdbc:mysql://localhost:3306/ebay","root","Qwe123456");
+        Connection con=(Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root","Qwe123456");
         Statement st=con.createStatement();
         String entity = request.getParameter("Sort by");
         ResultSet rs;

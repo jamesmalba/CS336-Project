@@ -46,17 +46,14 @@ Hello <%=session.getAttribute("user")%> <br>
 		</tr>
 		
 		<tr>    
-			<td>Browse auction items</td>
 			<td>
-				<form action="Search.jsp" method="post">
-				<input type="submit" value="Search"> 
-				</form>
+				<a href='Browse.jsp'>Browse auction items here</a>
 			</td>
 		</tr>
 		
 	</table>
 	<br><br>
-
+	<a href='qna.jsp'>Customer Service Question and Answer</a>
 	<br><br>
 	<a href='uchange.jsp'>Want to add/change credentials?</a>
 	<br>

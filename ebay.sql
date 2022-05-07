@@ -33,6 +33,67 @@ CREATE TABLE `administrator` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `administrator`
+--
+
+LOCK TABLES `administrator` WRITE;
+/*!40000 ALTER TABLE `administrator` DISABLE KEYS */;
+/*!40000 ALTER TABLE `administrator` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `answers`
+--
+
+DROP TABLE IF EXISTS `answers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `answers` (
+  `qId` int NOT NULL,
+  `rep_email` varchar(50) NOT NULL,
+  PRIMARY KEY (`qId`,`rep_email`),
+  KEY `rep_email` (`rep_email`),
+  CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`rep_email`) REFERENCES `customer_rep` (`rep_email`),
+  CONSTRAINT `answers_ibfk_2` FOREIGN KEY (`qId`) REFERENCES `qna` (`qId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `answers`
+--
+
+LOCK TABLES `answers` WRITE;
+/*!40000 ALTER TABLE `answers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `answers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `asks`
+--
+
+DROP TABLE IF EXISTS `asks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `asks` (
+  `qId` int NOT NULL,
+  `email` varchar(50) NOT NULL,
+  PRIMARY KEY (`qId`,`email`),
+  KEY `email` (`email`),
+  CONSTRAINT `asks_ibfk_1` FOREIGN KEY (`email`) REFERENCES `user` (`email`),
+  CONSTRAINT `asks_ibfk_2` FOREIGN KEY (`qId`) REFERENCES `qna` (`qId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `asks`
+--
+
+LOCK TABLES `asks` WRITE;
+/*!40000 ALTER TABLE `asks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `asks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `assisted_by`
 --
 
@@ -48,6 +109,15 @@ CREATE TABLE `assisted_by` (
   CONSTRAINT `assisted_by_ibfk_2` FOREIGN KEY (`email`) REFERENCES `user` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `assisted_by`
+--
+
+LOCK TABLES `assisted_by` WRITE;
+/*!40000 ALTER TABLE `assisted_by` DISABLE KEYS */;
+/*!40000 ALTER TABLE `assisted_by` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `auction`
@@ -71,6 +141,15 @@ CREATE TABLE `auction` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `auction`
+--
+
+LOCK TABLES `auction` WRITE;
+/*!40000 ALTER TABLE `auction` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auction` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `auctionbuyer`
 --
 
@@ -86,6 +165,15 @@ CREATE TABLE `auctionbuyer` (
   PRIMARY KEY (`auction_Id`,`bidder`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auctionbuyer`
+--
+
+LOCK TABLES `auctionbuyer` WRITE;
+/*!40000 ALTER TABLE `auctionbuyer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auctionbuyer` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `bidhistory`
@@ -106,6 +194,15 @@ CREATE TABLE `bidhistory` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `bidhistory`
+--
+
+LOCK TABLES `bidhistory` WRITE;
+/*!40000 ALTER TABLE `bidhistory` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bidhistory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `bidsin`
 --
 
@@ -124,6 +221,15 @@ CREATE TABLE `bidsin` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `bidsin`
+--
+
+LOCK TABLES `bidsin` WRITE;
+/*!40000 ALTER TABLE `bidsin` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bidsin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `bidsto`
 --
 
@@ -140,6 +246,15 @@ CREATE TABLE `bidsto` (
   CONSTRAINT `bidsto_ibfk_2` FOREIGN KEY (`auctionId`) REFERENCES `auction` (`auctionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bidsto`
+--
+
+LOCK TABLES `bidsto` WRITE;
+/*!40000 ALTER TABLE `bidsto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bidsto` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `contains`
@@ -161,6 +276,15 @@ CREATE TABLE `contains` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `contains`
+--
+
+LOCK TABLES `contains` WRITE;
+/*!40000 ALTER TABLE `contains` DISABLE KEYS */;
+/*!40000 ALTER TABLE `contains` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `createdby`
 --
 
@@ -178,6 +302,15 @@ CREATE TABLE `createdby` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `createdby`
+--
+
+LOCK TABLES `createdby` WRITE;
+/*!40000 ALTER TABLE `createdby` DISABLE KEYS */;
+/*!40000 ALTER TABLE `createdby` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `customer_rep`
 --
 
@@ -191,6 +324,15 @@ CREATE TABLE `customer_rep` (
   PRIMARY KEY (`rep_email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customer_rep`
+--
+
+LOCK TABLES `customer_rep` WRITE;
+/*!40000 ALTER TABLE `customer_rep` DISABLE KEYS */;
+/*!40000 ALTER TABLE `customer_rep` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `electronics`
@@ -212,6 +354,15 @@ CREATE TABLE `electronics` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `electronics`
+--
+
+LOCK TABLES `electronics` WRITE;
+/*!40000 ALTER TABLE `electronics` DISABLE KEYS */;
+/*!40000 ALTER TABLE `electronics` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `holds`
 --
 
@@ -227,6 +378,15 @@ CREATE TABLE `holds` (
   CONSTRAINT `holds_ibfk_2` FOREIGN KEY (`auction_Id`) REFERENCES `electronics` (`auction_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `holds`
+--
+
+LOCK TABLES `holds` WRITE;
+/*!40000 ALTER TABLE `holds` DISABLE KEYS */;
+/*!40000 ALTER TABLE `holds` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `laptop`
@@ -248,6 +408,15 @@ CREATE TABLE `laptop` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `laptop`
+--
+
+LOCK TABLES `laptop` WRITE;
+/*!40000 ALTER TABLE `laptop` DISABLE KEYS */;
+/*!40000 ALTER TABLE `laptop` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ledger`
 --
 
@@ -267,6 +436,15 @@ CREATE TABLE `ledger` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `ledger`
+--
+
+LOCK TABLES `ledger` WRITE;
+/*!40000 ALTER TABLE `ledger` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ledger` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `makes`
 --
 
@@ -282,6 +460,15 @@ CREATE TABLE `makes` (
   CONSTRAINT `makes_ibfk_2` FOREIGN KEY (`sale_id`) REFERENCES `ledger` (`sale_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `makes`
+--
+
+LOCK TABLES `makes` WRITE;
+/*!40000 ALTER TABLE `makes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `makes` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `moderated_by`
@@ -303,6 +490,15 @@ CREATE TABLE `moderated_by` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `moderated_by`
+--
+
+LOCK TABLES `moderated_by` WRITE;
+/*!40000 ALTER TABLE `moderated_by` DISABLE KEYS */;
+/*!40000 ALTER TABLE `moderated_by` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `posts`
 --
 
@@ -320,6 +516,39 @@ CREATE TABLE `posts` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `posts`
+--
+
+LOCK TABLES `posts` WRITE;
+/*!40000 ALTER TABLE `posts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `posts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `qna`
+--
+
+DROP TABLE IF EXISTS `qna`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `qna` (
+  `question` varchar(280) DEFAULT NULL,
+  `answer` varchar(280) DEFAULT NULL,
+  `qId` int NOT NULL,
+  PRIMARY KEY (`qId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `qna`
+--
+
+LOCK TABLES `qna` WRITE;
+/*!40000 ALTER TABLE `qna` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qna` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `records`
 --
 
@@ -335,6 +564,15 @@ CREATE TABLE `records` (
   CONSTRAINT `auctionId` FOREIGN KEY (`auctionId`) REFERENCES `auction` (`auctionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `records`
+--
+
+LOCK TABLES `records` WRITE;
+/*!40000 ALTER TABLE `records` DISABLE KEYS */;
+/*!40000 ALTER TABLE `records` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `report`
@@ -356,6 +594,15 @@ CREATE TABLE `report` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `report`
+--
+
+LOCK TABLES `report` WRITE;
+/*!40000 ALTER TABLE `report` DISABLE KEYS */;
+/*!40000 ALTER TABLE `report` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `searches`
 --
 
@@ -371,6 +618,15 @@ CREATE TABLE `searches` (
   CONSTRAINT `searches_ibfk_2` FOREIGN KEY (`auctionID`) REFERENCES `auction` (`auctionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `searches`
+--
+
+LOCK TABLES `searches` WRITE;
+/*!40000 ALTER TABLE `searches` DISABLE KEYS */;
+/*!40000 ALTER TABLE `searches` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `smartphone`
@@ -390,6 +646,15 @@ CREATE TABLE `smartphone` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `smartphone`
+--
+
+LOCK TABLES `smartphone` WRITE;
+/*!40000 ALTER TABLE `smartphone` DISABLE KEYS */;
+/*!40000 ALTER TABLE `smartphone` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tablet`
 --
 
@@ -406,6 +671,15 @@ CREATE TABLE `tablet` (
   CONSTRAINT `tv_ibfk_1` FOREIGN KEY (`auction_Id`) REFERENCES `electronics` (`auction_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tablet`
+--
+
+LOCK TABLES `tablet` WRITE;
+/*!40000 ALTER TABLE `tablet` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tablet` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `user`
@@ -427,6 +701,15 @@ CREATE TABLE `user` (
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -437,4 +720,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-06 11:48:38
+-- Dump completed on 2022-05-06 22:09:01
