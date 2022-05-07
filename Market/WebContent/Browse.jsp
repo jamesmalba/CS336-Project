@@ -1,18 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="app.*"%>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%>
-<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
     <title>Itemlist</title>
+    <%@page import="java.sql.*;"%>
 </head>
 <body bgcolor=white>
     <%
     try
     {
         Class.forName("com.mysql.jdbc.Driver");
-        Connection con=(Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root","Qwe123456");
+        Connection con=(Connection)DriverManager.getConnection(
+            "jdbc:mysql://localhost:3306/ebay","root","Qwe123456");
         Statement st=con.createStatement();
         String entity = request.getParameter("Sort by");
         ResultSet rs;
@@ -111,6 +109,12 @@ Search for Bid history
 Search for User History
 <form method="post" action="Suser.jsp">
 	<td>User name </td><td><input type="text" name="name"></td>
+<input type="submit" value="Search" />
+</form>
+
+Search for Similar items
+<form method="post" action="SProduct.jsp">
+	<td>Product name </td><td><input type="text" name="name"></td>
 <input type="submit" value="Search" />
 </form>
 
