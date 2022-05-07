@@ -28,7 +28,6 @@
 			<td>Name</td>
 			<td>Current Bid</td>
 			<td>Expiration Date/Time</td>
-			<td>Item Name</td>
 		</tr>
 			<%
 			//parse out the results

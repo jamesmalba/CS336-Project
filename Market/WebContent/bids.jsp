@@ -43,16 +43,50 @@
 				
 
 			<% }
-			//close the connection.
-			con.close();
 			%>
 		</table>
-
+		<br><br>
+		<h2>Bids you won</h2>
+		
+		<% {
+	
+			//Get the database connection
 			
-		<%} catch (Exception e) {
+		 	user = (String)session.getAttribute("user");
+			str = "select * from bidhistory a where a.bidder = '"+user+"';";
+			result = stmt.executeQuery(str);
+		%>
+			
+		<!--  Make an HTML table to show the results in: -->
+	<table>
+		<tr>    
+			<td>AuctionID</td>
+			<td>Price</td>
+			<td>Expiration Date/Time</td>
+			<td>Seller</td>
+		</tr>
+			<%
+			//parse out the results
+			while (result.next() ) { %>
+				<tr>    
+					<td><%= result.getString("auction_id") %></td>
+					<td><%= result.getString("buyer_price") %></td>
+					<td><%= result.getString("expdt") %></td>
+					<td><%= result.getString("seller") %></td>
+					
+				</tr>
+				
+
+			<% } 
+			//close the connection.
+			con.close();
+			}%>
+		</table>
+		
+		<%}  catch (Exception e) {
 			out.print(e);
 		}%>
-		
+		<br><br>
 <a href='Welcome.jsp'>Go back</a>
 <a href='logout.jsp'>Log out</a>
 	</body>
