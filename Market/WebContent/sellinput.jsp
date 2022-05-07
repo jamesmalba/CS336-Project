@@ -39,13 +39,20 @@
 			String newCreationdate = dtf.format(d);
 			
 			//ID
+			int highestID = 0;
 			String auctionid;
 			ResultSet rn;
-		    rn = stmt.executeQuery("select a.auctionID, count(*) from auction a");
+		    rn = stmt.executeQuery("select MAX(a.auctionID), count(a.auctionID) from auction a");
 		    while (rn.next()) {
-		    	newAuctionID = rn.getInt("count(*)");
+		    	newAuctionID = rn.getInt("count(a.auctionID)");
+		    	highestID = rn.getInt("MAX(a.auctionID)");
 		    }
-		    newAuctionID +=1;
+		    if (highestID >= newAuctionID) {
+		    	newAuctionID = highestID +1;
+		    }
+		    else {
+		    	newAuctionID +=1;
+		    }
 		    
 			//Sets up for query
 			String insert = "INSERT INTO auction(creationdate, expdate, seller, current_bid, min_price, auctionId, minbidincrement)"
