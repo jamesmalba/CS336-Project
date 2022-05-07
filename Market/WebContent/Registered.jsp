@@ -12,13 +12,30 @@
 	<body>
 		<% 
 		try {
-		
+			
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root", "Qwe123456");		
+			Statement stmt = con.createStatement();
+			ResultSet rn;
+			int existname = 0;
 			String name = request.getParameter("uname");
 			String pass = request.getParameter("upass");
 			String email = request.getParameter("email");
 			String passc = request.getParameter("upassc");
 			String dob = request.getParameter("dob");
 			String addr = request.getParameter("address");
+			
+			rn = stmt.executeQuery("select count(*) from user where user.email = '"+email+"';");
+			while (rn.next()) {
+				existname = rn.getInt("count(*)");
+			}
+			
+			if (existname == 1) {
+				out.println("The email login you provided already exists.");
+		    	out.println("<a href='Register.jsp'>try again</a>");
+		    	return;
+			}
+			
 			
 			if(!pass.equals(passc)){
 		    	out.println("Password and confirm password have to match.");
@@ -27,10 +44,7 @@
 		    }
 			
 			//Get the database connection
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root", "Qwe123456");		
 			
-			Statement stmt = con.createStatement();
 			String insert = "INSERT INTO user(name,password,email,dob,address)" + "VALUES (?, ?, ?, ?,?)";
 			PreparedStatement ps = con.prepareStatement(insert);
 			

@@ -21,6 +21,6 @@
 <input type="submit" value="Submit">
 	
 </form>
-	
+	<br><br><a href='Hi.jsp'>Go back</a>
 </body>
 </html>
