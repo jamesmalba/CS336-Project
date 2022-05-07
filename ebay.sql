@@ -18,6 +18,32 @@ USE `ebay`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `acontains`
+--
+
+DROP TABLE IF EXISTS `acontains`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `acontains` (
+  `auctionId` int DEFAULT NULL,
+  `auction_id` int NOT NULL,
+  PRIMARY KEY (`auction_id`),
+  KEY `auctionId` (`auctionId`),
+  CONSTRAINT `contains_ibfk_1` FOREIGN KEY (`auctionId`) REFERENCES `auction` (`auctionId`),
+  CONSTRAINT `contains_ibfk_2` FOREIGN KEY (`auction_id`) REFERENCES `bidhistory` (`auction_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `acontains`
+--
+
+LOCK TABLES `acontains` WRITE;
+/*!40000 ALTER TABLE `acontains` DISABLE KEYS */;
+/*!40000 ALTER TABLE `acontains` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `administrator`
 --
 
@@ -185,8 +211,8 @@ DROP TABLE IF EXISTS `bidhistory`;
 CREATE TABLE `bidhistory` (
   `seller` varchar(50) DEFAULT NULL,
   `bidder` varchar(50) DEFAULT NULL,
-  `time` int DEFAULT NULL,
-  `bdate` date DEFAULT NULL,
+  `expdt` datetime DEFAULT NULL,
+  `creationdt` datetime DEFAULT NULL,
   `buyer_price` int DEFAULT NULL,
   `auction_id` int NOT NULL,
   PRIMARY KEY (`auction_id`)
@@ -254,34 +280,6 @@ CREATE TABLE `bidsto` (
 LOCK TABLES `bidsto` WRITE;
 /*!40000 ALTER TABLE `bidsto` DISABLE KEYS */;
 /*!40000 ALTER TABLE `bidsto` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `contains`
---
-
-DROP TABLE IF EXISTS `contains`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `contains` (
-  `auctionId` int DEFAULT NULL,
-  `auction_id` int NOT NULL,
-  `seller` varchar(50) NOT NULL,
-  PRIMARY KEY (`auction_id`,`seller`),
-  KEY `auctionId` (`auctionId`),
-  KEY `seller_idx` (`seller`),
-  CONSTRAINT `contains_ibfk_1` FOREIGN KEY (`auctionId`) REFERENCES `auction` (`auctionId`),
-  CONSTRAINT `contains_ibfk_2` FOREIGN KEY (`auction_id`) REFERENCES `bidhistory` (`auction_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `contains`
---
-
-LOCK TABLES `contains` WRITE;
-/*!40000 ALTER TABLE `contains` DISABLE KEYS */;
-/*!40000 ALTER TABLE `contains` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -359,6 +357,7 @@ CREATE TABLE `electronics` (
 
 LOCK TABLES `electronics` WRITE;
 /*!40000 ALTER TABLE `electronics` DISABLE KEYS */;
+INSERT INTO `electronics` VALUES ('j','j','Brand New',1,'Apple','j','j');
 /*!40000 ALTER TABLE `electronics` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -385,6 +384,7 @@ CREATE TABLE `holds` (
 
 LOCK TABLES `holds` WRITE;
 /*!40000 ALTER TABLE `holds` DISABLE KEYS */;
+INSERT INTO `holds` VALUES (1,1);
 /*!40000 ALTER TABLE `holds` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -521,6 +521,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
+INSERT INTO `posts` VALUES ('j',1);
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -651,6 +652,7 @@ CREATE TABLE `smartphone` (
 
 LOCK TABLES `smartphone` WRITE;
 /*!40000 ALTER TABLE `smartphone` DISABLE KEYS */;
+INSERT INTO `smartphone` VALUES (1,'j','j','j');
 /*!40000 ALTER TABLE `smartphone` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -708,6 +710,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES ('c','c','j','2000-10-20',NULL,'j',NULL,NULL,NULL),('j','dd','j','2001-10-10',NULL,'j',NULL,NULL,NULL),('j','j','j','2000-10-11',NULL,'j',NULL,NULL,NULL),('o','o','o','2001-10-10',NULL,'o',NULL,NULL,NULL),('t','t','t','2000-10-10',NULL,'t',NULL,NULL,NULL),('Mr. Rutgers','test@rutgers.edu','qwe123','2001-10-10',NULL,'Rutgers Ave',NULL,NULL,NULL),('test','testing','1','2001-10-10',NULL,'dfsa',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -720,4 +723,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-06 22:09:01
+-- Dump completed on 2022-05-07 16:32:54

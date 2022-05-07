@@ -9,7 +9,8 @@
 		<title>Ended Auctions</title>
 	</head>
 	<body>
-		<% try {
+	<h1>Ended Auctions</h1>
+		<% {
 	
 			//Get the database connection
 			Class.forName("com.mysql.jdbc.Driver");
@@ -67,12 +68,11 @@
 				ps.executeUpdate(); 
 				}
 				else {
-					ps.close();
 					insert = "INSERT INTO bidhistory(seller, bidder, expdt, creationdt, buyer_price, auction_id)"
 							+ "VALUES (?, ?, ?, ?, ?, ?)";
 					ps = con.prepareStatement(insert);
 					ps.setString(1, exSeller);
-					ps.setString(2, null);
+					ps.setString(2, "None");
 					ps.setString(3, exEdate);
 					ps.setString(4, exCdate);
 					ps.setFloat(5, 0);
@@ -81,12 +81,11 @@
 					
 				}
 				
-				insert = "INSERT INTO acontains(auctionId, auction_Id, seller)"
-						+ "VALUES (?, ?, ?)";
+				insert = "INSERT INTO acontains(auctionId, auction_Id)"
+						+ "VALUES (?, ?)";
 				ps = con.prepareStatement(insert);
 				ps.setInt(1, exAuctionid);
 				ps.setInt(2, exAuctionid);
-				ps.setString(3, exSeller);
 				ps.executeUpdate();
 			}
 			
@@ -103,7 +102,7 @@
 			<td>Sale Price</td>
 			<td>Creation Date/Time</td>
 			<td>Expiration Date/Time</td>
-			<td>Highest Bidder</td>
+			<td>Bought By</td>
 			<td>Seller</td>
 		</tr>
 			<%
@@ -114,7 +113,7 @@
 					<td><%= result.getString("buyer_price") %></td>
 					<td><%= result.getString("creationdt") %></td>
 					<td><%= result.getString("expdt") %></td>
-					<td><%= result.getString("Bought By") %></td>
+					<td><%= result.getString("bidder") %></td>
 					<td><%= result.getString("seller") %></td>
 				</tr>
 				
@@ -137,9 +136,7 @@
 		}
 		%>
 			
-		<%} catch (Exception e) {
-			out.print(e);
-		}%>
+		<%} %>
 		<br>
 		<a href='bid.jsp'>Make a bid</a>
 		<br><br>
