@@ -25,7 +25,6 @@
 			
 			String str = "select e.name, a.current_bid, a.seller, a.expdate, a.auctionid, aa.bidamount from auction a, bidsto, holds h, electronics e, auctionbuyer aa where aa.bidder = '"+bidder+"' and aa.auction_id = bidsto.auction_id and bidsto.auctionid = a.auctionid and now() < a.expdate and a.auctionid = h.auctionid and h.auction_id = e.auction_id and not a.highestbidder = '"+bidder+"' group by aa.bidder;";
 			ResultSet result = stmt.executeQuery(str);
-
 		%>
 	<h1>Alerts</h1>		
 	<table>
@@ -55,15 +54,65 @@
 					<td><%= result.getString("a.expdate") %></td>
 					<td><%= result.getString("aa.bidamount") %></td>
 				</tr>
-			<% }
+			<% } %>
+			<% {
+	
+			//Get the database connection
+			//Gets current time 
+			d = new java.util.Date();
+			dtf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			datetimes = dtf.format(d);
+			
+			bidder = (String)session.getAttribute("user"); 
+			
+			str = "select e.name, a.current_bid, a.seller, a.expdate, a.auctionid, aa.bidamount from auction a, bidsto, holds h, electronics e, auctionbuyer aa where aa.bidder = '"+bidder+"' and aa.auction_id = bidsto.auction_id and bidsto.auctionid = a.auctionid and now() < a.expdate and a.auctionid = h.auctionid and h.auction_id = e.auction_id and not a.highestbidder = '"+bidder+"' and aa.autolimit = 0 group by aa.bidder;";
+			result = stmt.executeQuery(str);
+			%>
+			
+			
+	</table>
+	<br>
+	<br>
+	<br>
+	Bids that have gone through your upper limit
+			<table>
+			<tr>    
+				<td>Name</td>
+				<td>Current Bid</td>
+				<td>Seller</td>
+				<td>Expiration Date</td>
+				<td>Your bid</td>
+			</tr>
+				<%
+				
+				//parse out the results
+				while (result.next() ) { 
+				name = result.getString("e.name");
+				if (!name.equals(null)) {
+					out.println("Oh no! Looks like you have been outbid on.");
+				}
+				else {
+					out.println("Everything is good!");
+				}
+				%>
+					<tr>    
+						<td><%= result.getString("e.name") %></td>
+						<td><%= result.getString("a.current_bid") %></td>
+						<td><%= result.getString("a.seller") %></td>
+						<td><%= result.getString("a.expdate") %></td>
+						<td><%= result.getString("aa.bidamount") %></td>
+					</tr>
+				<% } 
+			
 			//close the connection.
 			con.close();
-			%>
+			} %>
+			
 		</table>
-		<br>
+		<br><br><br>
 		<a href='bid.jsp'>Bid again</a>
 		<br><br>
-		<%} catch (Exception e) {
+		<% } catch (Exception e) {
 			out.print(e);
 		}%>
 		
