@@ -1,0 +1,75 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="app.*"%>
+<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<title>Alerts</title>
+	</head>
+	<body>
+		<% try {
+	
+			//Get the database connection
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root", "Qwe123456");		
+			Statement stmt = con.createStatement();
+			List ll = new LinkedList();
+			//Gets current time 
+			java.util.Date d = new java.util.Date();
+			java.text.SimpleDateFormat dtf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String datetimes = dtf.format(d);
+			
+			String bidder = (String)session.getAttribute("user"); 
+			
+			String str = "select e.name, a.current_bid, a.seller, a.expdate, a.auctionid, aa.bidamount from auction a, bidsto, holds h, electronics e, auctionbuyer aa where aa.bidder = '"+bidder+"' and aa.auction_id = bidsto.auction_id and bidsto.auctionid = a.auctionid and now() < a.expdate and a.auctionid = h.auctionid and h.auction_id = e.auction_id and not a.highestbidder = '"+bidder+"' group by aa.bidder;";
+			ResultSet result = stmt.executeQuery(str);
+
+		%>
+	<h1>Alerts</h1>		
+	<table>
+		<tr>    
+			<td>Name</td>
+			<td>Current Bid</td>
+			<td>Seller</td>
+			<td>Expiration Date</td>
+			<td>Your bid</td>
+		</tr>
+			<%
+			String name;
+			//parse out the results
+			while (result.next() ) { 
+			name = result.getString("e.name");
+			if (!name.equals(null)) {
+				out.println("Oh no! Looks like you have been outbid on.");
+			}
+			else {
+				out.println("Everything is good!");
+			}
+			%>
+				<tr>    
+					<td><%= result.getString("e.name") %></td>
+					<td><%= result.getString("a.current_bid") %></td>
+					<td><%= result.getString("a.seller") %></td>
+					<td><%= result.getString("a.expdate") %></td>
+					<td><%= result.getString("aa.bidamount") %></td>
+				</tr>
+			<% }
+			//close the connection.
+			con.close();
+			%>
+		</table>
+		<br>
+		<a href='bid.jsp'>Bid again</a>
+		<br><br>
+		<%} catch (Exception e) {
+			out.print(e);
+		}%>
+		
+		
+
+<a href='Welcome.jsp'>Go back</a>
+<a href='logout.jsp'>Log out</a>
+	</body>
+</html>

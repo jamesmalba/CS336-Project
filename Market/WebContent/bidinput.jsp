@@ -115,6 +115,7 @@
 		    
 		    //gets highest possible bid
 		    float smax = 0; 
+		    float numab = 0;
 		    rn = stmt.executeQuery("select MAX(a.autolimit) from auctionbuyer a where a.auction_id = "+newAuctionId+";"); //and NOT a.bidder = '"+bidder+"' might need
 		   	while (rn.next()) {
 			   malimit = rn.getFloat("MAX(a.autolimit)");
@@ -130,6 +131,13 @@
    			float bidincre;
    			float bidlimits;
    			
+   			//num of autobidders
+   			rn = stmt.executeQuery("select count(*) from auctionbuyer a where a.auction_id = "+newAuctionId+" and not a.autolimit = 0;"); //and NOT a.bidder = '"+bidder+"' might need
+		   	while (rn.next()) {
+			   numab = rn.getFloat("count(*)");
+		   	}
+   			
+   			
    			rn = stmt.executeQuery("select * from auctionbuyer a where a.auction_id = "+newAuctionId+";");
 		   	while (rn.next()) {
 		    	//if there are competing bidders calculate autobid if possible
@@ -144,6 +152,10 @@
 			    			bbidamount += bidincre; 
 			    		}
 		    		}
+		    		if (numab == 1 && bidlimits > bbidamount) {
+		    			bbidamount += bidincre; 
+		    		}
+		    		
 		    		if (malimit == bidlimits && bidlimits >= (smax + bidincre))  {
 		    			bbidamount = smax + bidincre;
 		    		}
