@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>Itemlist</title>
-<%@ page import="java.io.*,java.util.*,java.sql.*"%></head>
-<%@ page import="javax.servlet.http.*,javax.servlet.*"%>
+    <%@page import="java.sql.*;"%>
+</head>
 <body bgcolor=white>
     <%
     try
@@ -12,42 +12,21 @@
         Connection con=(Connection)DriverManager.getConnection(
             "jdbc:mysql://localhost:3306/ebay","root","Qwe123456");
         Statement st=con.createStatement();
-        String entity = request.getParameter("Sort by");
+        String type = request.getParameter("command");
+        System.out.println(type);
+        String brand = request.getParameter("brand");
+        String cond = request.getParameter("condition");
+        String name = request.getParameter("name");
+        String color = request.getParameter("color");
         ResultSet rs;
-        if(entity==null)
+        if(type==null)
         {
         	 rs=st.executeQuery("select * from auction,electronics where auction.auctionID=electronics.auction_ID;");
         }
-        else if(entity.equals("name"))
-        {
-        	rs=st.executeQuery("select * from auction,electronics where auction.auctionID=electronics.auction_ID Order by(electronics.name);");
-        }
-        else if(entity.equals("zname"))
-        {
-        	rs=st.executeQuery("select * from auction,electronics where auction.auctionID=electronics.auction_ID Order by(electronics.name) DESC;");
-        }
-        else if(entity.equals("shprice"))
-        {
-        	rs=st.executeQuery("select * from auction,electronics where auction.auctionID=electronics.auction_ID Order by(auction.sale_price) DESC;");
-        }
-        else if(entity.equals("slprice"))
-        {
-        	rs=st.executeQuery("select * from auction,electronics where auction.auctionID=electronics.auction_ID Order by(auction.sale_price);");
-        }
-        else if(entity.equals("mhprice"))
-        {
-        	rs=st.executeQuery("select * from auction,electronics where auction.auctionID=electronics.auction_ID Order by(auction.current_bid) DESC;");
-        }
-        else if(entity.equals("mlprice"))
-        {
-        	rs=st.executeQuery("select * from auction,electronics where auction.auctionID=electronics.auction_ID Order by(auction.current_bid);");
-        	out.print("ok");
-        }
-        else
-        {
-        	 rs=st.executeQuery("Select S.name, A.current_bid From smartphone S, auction A, holds h Where A.auctionID=h.auctionID AND h.product_id=S.product_id;");
-        }
-       
+        else 
+        	rs=st.executeQuery("select * from " +type+", auction, electronics where "+type+ ".auction_ID= electronics.auction_Id AND electronics.auction_Id=auction.auctionId AND "+"'"+brand+"'"+"=electronics.brand"+" AND electronics.name"+" ="+"'"+name+"'"+" AND electronics.scondition= "+"'"+cond+"'"+" AND electronics.color ="+"'"+color+"'" );
+        
+     
     %><table border=1 align=center style="text-align:center">
       <thead>
           <tr>
