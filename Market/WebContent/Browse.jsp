@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>Itemlist</title>
-    <%@page import="java.sql.*;"%>
-</head>
+<%@ page import="java.io.*,java.util.*,java.sql.*"%></head>
+<%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <body bgcolor=white>
     <%
     try
@@ -41,7 +41,7 @@
         else if(entity.equals("mlprice"))
         {
         	rs=st.executeQuery("select * from auction,electronics where auction.auctionID=electronics.auction_ID Order by(auction.current_bid);");
-        	System.out.println("ok");
+        	out.print("ok");
         }
         else
         {
