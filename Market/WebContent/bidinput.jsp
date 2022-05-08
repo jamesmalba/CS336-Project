@@ -64,10 +64,10 @@
 			    }
 			    
 			    //move old auctionbuyer to bidhistory
-			    String oldseller;
+			    String oldseller = null;
 			    int oldid = 0;
 			    float oldincre = 0;
-			    String oldbidder;
+			    String oldbidder = null;
 			    float oldalim = 0;
 			    float oldbid = 0;
 			    rn = stmt.executeQuery("select * from auctionbuyer ab where ab.auction_Id = "+newAuctionId+" and ab.bidder = '"+bidder+"';");
@@ -103,9 +103,18 @@
 			    ps.setFloat(7, oldalim);
 			    ps.executeUpdate();
 			    
+			    //insert into acontains
+			    insert = "INSERT INTO acontains(auctionId, auction_id, bidamount)"
+						+ "VALUES (?, ?, ?)";
+			    ps = con.prepareStatement(insert);
+			    ps.setInt(1, oldid);
+			    ps.setInt(2, oldid);
+			    ps.setFloat(3, oldbid);
+			    ps.executeUpdate();
+			    
 				String currentHighestbidder;			
 			    //updateauctionbuyer
-				insert = "update auctionbuyer set min_increment = (?), autolimit = (?), bidamount = (?) where auction.auctionId = (?) and bidder = (?);";
+				insert = "update auctionbuyer set min_increment = (?), autolimit = (?), bidamount = (?) where auctionbuyer.auction_Id = (?) and bidder = (?);";
 				ps = con.prepareStatement(insert);
 				ps.setFloat(1, newAutobidincrement);
 				ps.setFloat(2, newAutobidlimit);
@@ -127,22 +136,6 @@
 				ps.setInt(3, newAuctionId);
 				ps.executeUpdate();
 				
-				
-				insert = "INSERT INTO bidsIn(email, auction_id,bidder)"
-						+ "VALUES (?, ?, ?)";
-				ps = con.prepareStatement(insert);
-				ps.setString(1, bidder);
-				ps.setFloat(2, newAuctionId);
-				ps.setString(3, bidder);
-				ps.executeUpdate();
-				
-				insert = "INSERT INTO bidsTo(bidder, auction_id, auctionid)"
-						+ "VALUES (?, ?, ?)";
-				ps = con.prepareStatement(insert);
-				ps.setString(1, bidder);
-				ps.setFloat(2, newAuctionId);
-				ps.setFloat(3, newAuctionId);
-				ps.executeUpdate();
 		    	
 		    }
 			
@@ -278,11 +271,11 @@
    				currenthighestbidder = rn.getString("a.bidder");
    			}
    			insert = "update auction set highestbidder = (?), current_bid = (?) where auction.auctionId = (?);";
-			ps = con.prepareStatement(insert);
-			ps.setString(1, currenthighestbidder);
-			ps.setFloat(2, currentmax);
-			ps.setInt(3, newAuctionId);
-			ps.executeUpdate();
+			PreparedStatement pt = con.prepareStatement(insert);
+			pt.setString(1, currenthighestbidder);
+			pt.setFloat(2, currentmax);
+			pt.setInt(3, newAuctionId);
+			pt.executeUpdate();
 		    	
 		    //checks if there is a bid on the auction already
 		    /*rn = stmt.executeQuery("select a.highestbidder,a.seller from auction a where a.auctionId = "+newAuctionId+";");
