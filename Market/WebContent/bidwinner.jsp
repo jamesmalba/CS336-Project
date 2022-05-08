@@ -30,8 +30,8 @@
 			float exCB;
 			int exAuctionid;
 			float minprice;
-			//queries ended auctions not in history 
-			String str = "select * FROM auction WHERE NOT EXISTS (SELECT * FROM acontains WHERE acontains.auctionid = auction.auctionid) and auction.expdate < now();";
+			//queries ended auctions without sale price 
+			String str = "select * FROM auction where auction.expdate < now() and auction.sale_price is null;";
 			ResultSet result = stmt.executeQuery(str);
 			while (result.next()) {
 				exCdate = result.getString("creationdate");
@@ -51,48 +51,14 @@
 					ps.setInt(2, exAuctionid);
 					ps.executeUpdate();
 					fsale = exCB; 
+				}				
 				}
+			{
 				
-				String insert;
-				//inserts final auction info to auctionhistory
-				if (minprice < exCB) {
-				insert = "INSERT INTO bidhistory(seller, bidder, expdt, creationdt, buyer_price, auction_id)"
-						+ "VALUES (?, ?, ?, ?, ?, ?)";
-				ps = con.prepareStatement(insert);
-				ps.setString(1, exSeller);
-				ps.setString(2, exHB);
-				ps.setString(3, exEdate);
-				ps.setString(4, exCdate);
-				ps.setFloat(5, fsale);
-				ps.setInt(6, exAuctionid);
-				ps.executeUpdate(); 
-				}
-				else {
-					insert = "INSERT INTO bidhistory(seller, bidder, expdt, creationdt, buyer_price, auction_id)"
-							+ "VALUES (?, ?, ?, ?, ?, ?)";
-					ps = con.prepareStatement(insert);
-					ps.setString(1, exSeller);
-					ps.setString(2, "None");
-					ps.setString(3, exEdate);
-					ps.setString(4, exCdate);
-					ps.setFloat(5, 0);
-					ps.setInt(6, exAuctionid);
-					ps.executeUpdate(); 
-					
-				}
-				
-				insert = "INSERT INTO acontains(auctionId, auction_Id)"
-						+ "VALUES (?, ?)";
-				ps = con.prepareStatement(insert);
-				ps.setInt(1, exAuctionid);
-				ps.setInt(2, exAuctionid);
-				ps.executeUpdate();
 			}
-			
-			
 			//queries ended auctions 
-			str = "select * FROM bidhistory;";
-			result = stmt.executeQuery(str);			
+			
+			
 		%>
 			
 		<!-- PRINTS ALL ENDED AUCTIONS -->
@@ -106,14 +72,15 @@
 			<td>Seller</td>
 		</tr>
 			<%
-			//parse out the results
+			String st = "select * FROM auction where auction.expdate < now() and not auction.sale_price is null;";
+			result = stmt.executeQuery(st);	
 			while (result.next() ) { %>
 				<tr>    
-					<td><%= result.getString("auction_id") %></td>
-					<td><%= result.getString("buyer_price") %></td>
-					<td><%= result.getString("creationdt") %></td>
-					<td><%= result.getString("expdt") %></td>
-					<td><%= result.getString("bidder") %></td>
+					<td><%= result.getString("auctionid") %></td>
+					<td><%= result.getString("sale_price") %></td>
+					<td><%= result.getString("creationdate") %></td>
+					<td><%= result.getString("expdate") %></td>
+					<td><%= result.getString("highestbidder") %></td>
 					<td><%= result.getString("seller") %></td>
 				</tr>
 				

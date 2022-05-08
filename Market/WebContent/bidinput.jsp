@@ -32,51 +32,92 @@
 			float minbidincrement = 0; 
 			float currentBid = 0; 
 			float minBid = 0;
-			
+			int acbnum = 0;
 			String existbidder = null; 
-			
+			float malimit = 0;
 			//checks if there is an existing bid
 			rn = stmt.executeQuery("select a.bidder from auctionbuyer a where a.auction_Id = "+newAuctionId+" and a.bidder = '"+bidder+"';");
 		    while (rn.next()) {
 		    	existbidder = rn.getString("a.bidder");
 		    }
+		   
+		    String insert;
+		    int bdog;
+		    //if there exists a bid already
+		                  
+		    
 			if(existbidder != null){
-		    	out.println("You already have an existing bid on the item (AuctionID: "+newAuctionId+")");
+		    	/*out.println("You already have an existing bid on the item (AuctionID: "+newAuctionId+")");
 		    	out.println("<a href='bid.jsp'>Go back</a>");
-		    	return;
-		    }
-			
-			//take current info on auction
-		    rn = stmt.executeQuery("select a.minbidincrement,a.current_bid from auction a where a.auctionId = "+newAuctionId+";");
-		    while (rn.next()) {
-		    	minbidincrement = rn.getFloat("a.minbidincrement");
-		    	currentBid = rn.getFloat("a.current_bid");
-		    }
-			minBid = minbidincrement + currentBid;
-		    //see if bid amount is greater than auction.minbidincrement
-			if(bidamount < minBid){
-		    	out.println("Bid amount has to be greater than current bid + min increment.");
-		    	out.println("<a href='bid.jsp'>try again</a>");
-		    	return;
-		    }
-			String currentHighestbidder;
-		    
-		    
-		    //inserts info
-		    	String insert = "INSERT INTO auctionbuyer(auction_Id, min_increment, bidder, autolimit, bidamount)"
-						+ "VALUES (?, ?, ?, ?, ?)";
-				PreparedStatement ps = con.prepareStatement(insert);
-				ps.setInt(1, newAuctionId);
-				ps.setFloat(2, newAutobidincrement);
-				ps.setString(3, bidder);
-				ps.setFloat(4, newAutobidlimit);
-				ps.setFloat(5, bidamount);
+		    	return;*/
+				
+			    while (rn.next()) {
+			    	minbidincrement = rn.getFloat("a.minbidincrement");
+			    	currentBid = rn.getFloat("a.current_bid");
+			    }
+				minBid = minbidincrement + currentBid;
+			    //see if bid amount is greater than auction.minbidincrement
+				if(bidamount < minBid){
+			    	out.println("Bid amount has to be greater than current bid + min increment.");
+			    	out.println("<a href='bid.jsp'>try again</a>");
+			    	return;
+			    }
+			    
+			    //move old auctionbuyer to bidhistory
+			    String oldseller;
+			    int oldid = 0;
+			    float oldincre = 0;
+			    String oldbidder;
+			    float oldalim = 0;
+			    float oldbid = 0;
+			    rn = stmt.executeQuery("select * from auctionbuyer ab where ab.auction_Id = "+newAuctionId+" and ab.bidder = '"+bidder+"';");
+			    while (rn.next()) {
+			    	oldid = rn.getInt("auction_id");
+			    	oldincre = rn.getFloat("min_increment");
+			    	oldbidder = rn.getString("bidder");
+			    	oldalim = rn.getFloat("autolimit");
+			    	oldbid = rn.getFloat("bidamount");
+			    }
+			    
+			    //get seller name
+			    rn = stmt.executeQuery("select * from auction ab where ab.auctionId = "+newAuctionId+";");
+			    while (rn.next()) {
+			    	oldseller = rn.getString("seller");
+			    }
+			    
+			    //gets datetime
+			    java.util.Date d = new java.util.Date();
+				java.text.SimpleDateFormat dtf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String newCreationdate = dtf.format(d);
+			    
+			    //insert to bidhistory
+			    insert = "INSERT INTO bidhistory(seller, bidder, biddt, bidamount, auction_id, minincrement, autolimitb)"
+						+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+			    PreparedStatement ps = con.prepareStatement(insert);
+			    ps.setString(1, oldseller);
+			    ps.setString(2, oldbidder);
+			    ps.setString(3, newCreationdate);
+			    ps.setFloat(4, oldbid);
+			    ps.setInt(5, oldid);
+			    ps.setFloat(6, oldincre);
+			    ps.setFloat(7, oldalim);
+			    ps.executeUpdate();
+			    
+				String currentHighestbidder;			
+			    //updateauctionbuyer
+				insert = "update auctionbuyer set min_increment = (?), autolimit = (?), bidamount = (?) where auction.auctionId = (?) and bidder = (?);";
+				ps = con.prepareStatement(insert);
+				ps.setFloat(1, newAutobidincrement);
+				ps.setFloat(2, newAutobidlimit);
+				ps.setFloat(3, bidamount);
+				ps.setInt(4, newAuctionId);
+				ps.setString(5, bidder);
 				ps.executeUpdate();
-				int bdog;
+				
 				ResultSet bmax; 
 		    	ResultSet mlimit;
-		    	float malimit = 0;
-		    	int acbnum = 0;
+		    	
+		    	acbnum = 0;
 		    
 		    	 //insert new bidder as highest
 				insert = "update auction set highestbidder = (?), current_bid = (?) where auction.auctionId = (?);";
@@ -102,13 +143,77 @@
 				ps.setFloat(2, newAuctionId);
 				ps.setFloat(3, newAuctionId);
 				ps.executeUpdate();
-		    			
-		    			
-		    	//counts the number of people who have autobid on 
-			    rn = stmt.executeQuery("select count(*) from auctionbuyer a where a.auction_Id = "+newAuctionId+" and a.autolimit > "+currentBid+" and a.bidamount < "+currentBid+";"); // where a.auction_id = "+newAuctionId+" and NOT a.autolimit = 0
-			    while (rn.next()){
-	   				acbnum = rn.getInt("count(*)");
-	   			}
+		    	
+		    }
+			
+			else {
+				rn = stmt.executeQuery("select a.minbidincrement,a.current_bid from auction a where a.auctionId = "+newAuctionId+";");
+			    while (rn.next()) {
+			    	minbidincrement = rn.getFloat("a.minbidincrement");
+			    	currentBid = rn.getFloat("a.current_bid");
+			    }
+				minBid = minbidincrement + currentBid;
+			    //see if bid amount is greater than auction.minbidincrement
+				if(bidamount < minBid){
+			    	out.println("Bid amount has to be greater than current bid + min increment.");
+			    	out.println("<a href='bid.jsp'>try again</a>");
+			    	return;
+			    }
+				String currentHighestbidder;
+			    
+			    
+			    //inserts info
+			    	 insert = "INSERT INTO auctionbuyer(auction_Id, min_increment, bidder, autolimit, bidamount)"
+							+ "VALUES (?, ?, ?, ?, ?)";
+					PreparedStatement ps = con.prepareStatement(insert);
+					ps.setInt(1, newAuctionId);
+					ps.setFloat(2, newAutobidincrement);
+					ps.setString(3, bidder);
+					ps.setFloat(4, newAutobidlimit);
+					ps.setFloat(5, bidamount);
+					ps.executeUpdate();
+					ResultSet bmax; 
+			    	ResultSet mlimit;
+			    	
+			    	acbnum = 0;
+			    
+			    	 //insert new bidder as highest
+					insert = "update auction set highestbidder = (?), current_bid = (?) where auction.auctionId = (?);";
+					ps = con.prepareStatement(insert);
+					ps.setString(1, bidder);
+					ps.setFloat(2, bidamount);
+					ps.setInt(3, newAuctionId);
+					ps.executeUpdate();
+					
+					
+					insert = "INSERT INTO bidsIn(email, auction_id,bidder)"
+							+ "VALUES (?, ?, ?)";
+					ps = con.prepareStatement(insert);
+					ps.setString(1, bidder);
+					ps.setFloat(2, newAuctionId);
+					ps.setString(3, bidder);
+					ps.executeUpdate();
+					
+					insert = "INSERT INTO bidsTo(bidder, auction_id, auctionid)"
+							+ "VALUES (?, ?, ?)";
+					ps = con.prepareStatement(insert);
+					ps.setString(1, bidder);
+					ps.setFloat(2, newAuctionId);
+					ps.setFloat(3, newAuctionId);
+					ps.executeUpdate();
+			}
+		    
+		    //------------------------------------------------------------------AUTOHERE		
+		    
+		    
+		    
+		    
+		    //counts the number of people who have autobid on 
+		    rn = stmt.executeQuery("select count(*) from auctionbuyer a where a.auction_Id = "+newAuctionId+" and a.autolimit > "+currentBid+" and a.bidamount < "+currentBid+";"); // where a.auction_id = "+newAuctionId+" and NOT a.autolimit = 0
+			    
+		    while (rn.next()){	
+		    	acbnum = rn.getInt("count(*)");
+		    }
 		    			
 		    			
 		    //queries for all autobidders participating in the same auction
@@ -136,7 +241,7 @@
 		   	while (rn.next()) {
 			   numab = rn.getFloat("count(*)");
 		   	}
-   			
+   			int obdog = 0;
    			
    			rn = stmt.executeQuery("select * from auctionbuyer a where a.auction_id = "+newAuctionId+";");
 		   	while (rn.next()) {
@@ -160,7 +265,7 @@
 		    			bbidamount = smax + bidincre;
 		    		}
 		    		
-		    		bdog = stmt2.executeUpdate("UPDATE auctionbuyer set bidamount = "+bbidamount+" where auction_id = "+newAuctionId+" and bidder = '"+bbidder+"';");
+		    		obdog = stmt2.executeUpdate("UPDATE auctionbuyer set bidamount = "+bbidamount+" where auction_id = "+newAuctionId+" and bidder = '"+bbidder+"';");
 		    	}
 		   
 		    }		
@@ -172,7 +277,13 @@
    				currentmax = rn.getFloat("MAX(bidamount)");
    				currenthighestbidder = rn.getString("a.bidder");
    			}
-		    			
+   			insert = "update auction set highestbidder = (?), current_bid = (?) where auction.auctionId = (?);";
+			ps = con.prepareStatement(insert);
+			ps.setString(1, currenthighestbidder);
+			ps.setFloat(2, currentmax);
+			ps.setInt(3, newAuctionId);
+			ps.executeUpdate();
+		    	
 		    //checks if there is a bid on the auction already
 		    /*rn = stmt.executeQuery("select a.highestbidder,a.seller from auction a where a.auctionId = "+newAuctionId+";");
 		    while (rn.next()) {
@@ -190,12 +301,6 @@
 		    //move old highest bidder to bidder history
 			
 		    //update new highest bidder
-		    insert = "update auction set highestbidder = (?), current_bid = (?) where auction.auctionId = (?);";
-			ps = con.prepareStatement(insert);
-			ps.setString(1, currenthighestbidder);
-			ps.setFloat(2, currentmax);
-			ps.setInt(3, newAuctionId);
-			ps.executeUpdate();
 		    
 			con.close();
 			out.println("Bid success!");

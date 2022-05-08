@@ -173,7 +173,7 @@ CREATE TABLE `auction` (
 
 LOCK TABLES `auction` WRITE;
 /*!40000 ALTER TABLE `auction` DISABLE KEYS */;
-INSERT INTO `auction` VALUES ('2022-05-07 16:34:23','2020-10-10 10:10:10',NULL,'test@rutgers.edu',0,200,1,NULL,0.00),('2022-05-07 16:34:51','2020-10-10 10:10:10',NULL,'test@rutgers.edu',0,200,2,NULL,0.00);
+INSERT INTO `auction` VALUES ('2022-05-07 16:34:23','2009-10-10 10:10:10',NULL,'test@rutgers.edu',0,200,1,19.00,0.00),('2022-05-07 16:34:51','2020-10-10 10:10:10',NULL,'test@rutgers.edu',0,200,2,NULL,0.00),('2022-05-08 13:34:47','2024-10-20 10:10:10','c','test@rutgers.edu',49,10,3,NULL,10.00);
 /*!40000 ALTER TABLE `auction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,6 +200,7 @@ CREATE TABLE `auctionbuyer` (
 
 LOCK TABLES `auctionbuyer` WRITE;
 /*!40000 ALTER TABLE `auctionbuyer` DISABLE KEYS */;
+INSERT INTO `auctionbuyer` VALUES (3,0.00,'c',0.00,49.00);
 /*!40000 ALTER TABLE `auctionbuyer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -216,6 +217,8 @@ CREATE TABLE `bidhistory` (
   `biddt` datetime DEFAULT NULL,
   `bidamount` float NOT NULL,
   `auction_id` int NOT NULL,
+  `minincrement` float DEFAULT NULL,
+  `autolimitb` float DEFAULT NULL,
   PRIMARY KEY (`auction_id`,`bidamount`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -253,6 +256,7 @@ CREATE TABLE `bidsin` (
 
 LOCK TABLES `bidsin` WRITE;
 /*!40000 ALTER TABLE `bidsin` DISABLE KEYS */;
+INSERT INTO `bidsin` VALUES (3,'c','c');
 /*!40000 ALTER TABLE `bidsin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,6 +284,7 @@ CREATE TABLE `bidsto` (
 
 LOCK TABLES `bidsto` WRITE;
 /*!40000 ALTER TABLE `bidsto` DISABLE KEYS */;
+INSERT INTO `bidsto` VALUES (3,3,'c');
 /*!40000 ALTER TABLE `bidsto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -358,7 +363,7 @@ CREATE TABLE `electronics` (
 
 LOCK TABLES `electronics` WRITE;
 /*!40000 ALTER TABLE `electronics` DISABLE KEYS */;
-INSERT INTO `electronics` VALUES ('j','j','Brand New',1,'Apple','j','j'),('j','test','Brand New',2,'Apple','j','testt');
+INSERT INTO `electronics` VALUES ('j','j','Brand New',1,'Apple','j','j'),('j','test','Brand New',2,'Apple','j','testt'),('Phone','freen','Brand New',3,'Oneplus','j','j');
 /*!40000 ALTER TABLE `electronics` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -385,7 +390,7 @@ CREATE TABLE `holds` (
 
 LOCK TABLES `holds` WRITE;
 /*!40000 ALTER TABLE `holds` DISABLE KEYS */;
-INSERT INTO `holds` VALUES (1,1),(2,2);
+INSERT INTO `holds` VALUES (1,1),(2,2),(3,3);
 /*!40000 ALTER TABLE `holds` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -522,7 +527,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES ('j',1),('test@rutgers.edu',2);
+INSERT INTO `posts` VALUES ('j',1),('test@rutgers.edu',2),('test@rutgers.edu',3);
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -653,7 +658,7 @@ CREATE TABLE `smartphone` (
 
 LOCK TABLES `smartphone` WRITE;
 /*!40000 ALTER TABLE `smartphone` DISABLE KEYS */;
-INSERT INTO `smartphone` VALUES (1,'j','j','j'),(2,'test','j','j');
+INSERT INTO `smartphone` VALUES (1,'j','j','j'),(2,'test','j','j'),(3,'j','j','j');
 /*!40000 ALTER TABLE `smartphone` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -724,4 +729,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-07 23:53:27
+-- Dump completed on 2022-05-08 14:45:04
