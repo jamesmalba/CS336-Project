@@ -16,6 +16,11 @@
 		<tr><td>Enter here: <input type= text name="question"> </td></tr>
 	</table>
 	</form>
+Search for keyword
+<form method="post" action="keyword.jsp">
+	<td>Keyword </td><td><input type="text" name="word"></td>
+<input type="submit" value="Search" />
+</form>	
 List of questions and answers:
 	<% try {
 			//Get the database connection
