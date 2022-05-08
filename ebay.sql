@@ -26,12 +26,12 @@ DROP TABLE IF EXISTS `acontains`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `acontains` (
   `auctionId` int NOT NULL,
-  `biddt` datetime DEFAULT NULL,
+  `bidamount` float DEFAULT NULL,
   `auction_id` int DEFAULT NULL,
   PRIMARY KEY (`auctionId`),
-  KEY `auction_id` (`auction_id`,`biddt`),
+  KEY `auction_id` (`auction_id`,`bidamount`),
   CONSTRAINT `acontains_ibfk_1` FOREIGN KEY (`auctionId`) REFERENCES `auction` (`auctionId`),
-  CONSTRAINT `acontains_ibfk_2` FOREIGN KEY (`auction_id`, `biddt`) REFERENCES `bidhistory` (`auction_id`, `biddt`)
+  CONSTRAINT `acontains_ibfk_2` FOREIGN KEY (`auction_id`, `bidamount`) REFERENCES `bidhistory` (`auction_id`, `bidamount`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -213,10 +213,10 @@ DROP TABLE IF EXISTS `bidhistory`;
 CREATE TABLE `bidhistory` (
   `seller` varchar(50) DEFAULT NULL,
   `bidder` varchar(50) DEFAULT NULL,
-  `biddt` datetime NOT NULL,
-  `buyer_price` int DEFAULT NULL,
+  `biddt` datetime DEFAULT NULL,
+  `bidamount` float NOT NULL,
   `auction_id` int NOT NULL,
-  PRIMARY KEY (`auction_id`,`biddt`)
+  PRIMARY KEY (`auction_id`,`bidamount`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -724,4 +724,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-07 23:32:34
+-- Dump completed on 2022-05-07 23:53:27
