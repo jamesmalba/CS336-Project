@@ -8,6 +8,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Auctions</title>
 	</head>
+	<center>
 	<h1>All Active Auctions</h1>
 	<body>
 		<% try {
@@ -22,6 +23,8 @@
 		%>
 			
 		<!--  Make an HTML table to show the results in: -->
+	<style>table, tr, td {border: 1px solid black;}tr, td {padding: 5px;}</style>
+	
 	<table>
 		<tr>    
 			<td>Name</td>
@@ -51,12 +54,13 @@
 			con.close();
 			%>
 		</table>
+		</center>
 
 			
 		<%} catch (Exception e) {
 			out.print(e);
 		}%>
-		<br>
+		<br><br><br>
 		<a href='bid.jsp'>Make a bid</a>
 		<br><br>
 		<a href='setalert.jsp'>Set an alert for an item you want</a>

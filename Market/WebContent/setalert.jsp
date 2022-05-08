@@ -6,70 +6,33 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Alerts</title>
+		<title>Set Alerts</title>
 	</head>
 	<body>
-		<% try {
-	
-			//Get the database connection
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root", "Qwe123456");		
-			Statement stmt = con.createStatement();
-			List ll = new LinkedList();
-			//Gets current time 
-			java.util.Date d = new java.util.Date();
-			java.text.SimpleDateFormat dtf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String datetimes = dtf.format(d);
-			
-			String bidder = (String)session.getAttribute("user"); 
-			
-			String str = "select e.name, a.current_bid, a.seller, a.expdate, a.auctionid, aa.bidamount from auction a, bidsto, holds h, electronics e, auctionbuyer aa where aa.bidder = '"+bidder+"' and aa.auction_id = bidsto.auction_id and bidsto.auctionid = a.auctionid and now() < a.expdate and a.auctionid = h.auctionid and h.auction_id = e.auction_id and not a.highestbidder = '"+bidder+"' group by aa.bidder;";
-			ResultSet result = stmt.executeQuery(str);
-
-		%>
-	<h1>Alerts</h1>		
-	<table>
-		<tr>    
-			<td>Name</td>
-			<td>Current Bid</td>
-			<td>Seller</td>
-			<td>Expiration Date</td>
-			<td>Your bid</td>
-		</tr>
-			<%
-			String name;
-			//parse out the results
-			while (result.next() ) { 
-			name = result.getString("e.name");
-			if (!name.equals(null)) {
-				out.println("Oh no! Looks like you have been outbid on.");
-			}
-			else {
-				out.println("Everything is good!");
-			}
-			%>
-				<tr>    
-					<td><%= result.getString("e.name") %></td>
-					<td><%= result.getString("a.current_bid") %></td>
-					<td><%= result.getString("a.seller") %></td>
-					<td><%= result.getString("a.expdate") %></td>
-					<td><%= result.getString("aa.bidamount") %></td>
-				</tr>
-			<% }
-			//close the connection.
-			con.close();
-			%>
+		<h2>Set an alert to get notified when an item becomes available</h2>
+		<form method="post" action="alerts.jsp">
+		<table>
+			<tr>    
+				<td>Item type:</td>
+				<td>
+					<select name="type" size=1>
+						<option value="Smartphone">Smartphone</option>
+						<option value="Tablet">Tablet</option>
+						<option value="Laptop">Laptop</option>
+					</select>  
+				</td>
+			</tr>
+			<tr>
+				<td>Item name:</td><td><input type = "text" name = "item"></td>
+			</tr>
 		</table>
 		<br>
-		<a href='bid.jsp'>Bid again</a>
+			<input type = "submit" value = "Set alert!">
+		</form>	
 		<br><br>
-		<%} catch (Exception e) {
-			out.print(e);
-		}%>
-		
-		
+					
 
-<a href='Welcome.jsp'>Go back</a>
-<a href='logout.jsp'>Log out</a>
-	</body>
+			<a href='Welcome.jsp'>Return to Home Page</a>
+			<a href='logout.jsp'>Log out</a>
+	</body>	
 </html>
