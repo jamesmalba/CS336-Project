@@ -25,7 +25,7 @@
 		<!--  Make an HTML table to show the results in: -->
 	<table>
 		<tr>    
-			<td>AuctionID</td>
+			<td>Auction ID</td>
 			<td>Your Bid</td>
 			<td>Auto Limit</td>
 			<td>Auto Increment</td>
