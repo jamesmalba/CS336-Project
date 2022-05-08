@@ -131,7 +131,7 @@
 				String newStoragetype = request.getParameter("storagetype");
 				String newOS = request.getParameter("OS");
 				String newRAM = request.getParameter("lram");
-				insert = "INSERT INTO tablet(auction_Id, cpu, gpu, storagetype, os, ram)"
+				insert = "INSERT INTO laptop(auction_Id, cpu, gpu, storagetype, os, ram)"
 						+ "VALUES (?, ?, ?, ?, ?, ?)";
 				ps = con.prepareStatement(insert);
 				ps.setInt(1, newAuctionID);

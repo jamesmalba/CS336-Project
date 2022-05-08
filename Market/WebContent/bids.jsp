@@ -54,7 +54,7 @@
 			//Get the database connection
 			
 		 	user = (String)session.getAttribute("user");
-			str = "select * from bidhistory a where a.bidder = '"+user+"';";
+			str = "select * from auction a where a.highestbidder = '"+user+"' and not a.sale_price is null;";
 			result = stmt.executeQuery(str);
 		%>
 			
@@ -70,9 +70,9 @@
 			//parse out the results
 			while (result.next() ) { %>
 				<tr>    
-					<td><%= result.getString("auction_id") %></td>
-					<td><%= result.getString("buyer_price") %></td>
-					<td><%= result.getString("expdt") %></td>
+					<td><%= result.getString("auctionid") %></td>
+					<td><%= result.getString("sale_price") %></td>
+					<td><%= result.getString("expdate") %></td>
 					<td><%= result.getString("seller") %></td>
 					
 				</tr>

@@ -9,14 +9,15 @@
 <title>Q and A</title>
 </head>
 <body>
-<h1>Hello <%=session.getAttribute("user")%></h1>
+<h1>Customer Question and Answer</h1>
+<h4>Hello <%=session.getAttribute("user")%></h4>
 <form action = "ask.jsp" method="post">
 	<table>
 		<tr><td>Ask a Question:</td></tr>
 		<tr><td>Enter here: <input type= text name="question"> </td></tr>
 	</table>
 	</form>
-Search for keyword
+Search for a question
 <form method="post" action="keyword.jsp">
 	<td>Keyword </td><td><input type="text" name="word"></td>
 <input type="submit" value="Search" />
@@ -35,7 +36,7 @@ List of questions and answers:
 		<!--  Make an HTML table to show the results in: -->
 	<table>
 		<tr>    
-			<td>qId</td>
+			<td>Question Id</td>
 			<td>Question</td>
 			<td>Answer</td>
 		</tr>
