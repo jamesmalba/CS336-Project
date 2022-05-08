@@ -43,7 +43,7 @@
 			con.close();
 			
 			out.print("User created!");
-			response.sendRedirect("customer_rep_login.jsp");
+        	out.println("<a href='Hi.jsp'>Go back</a>");
 			
 		} 
 		catch (Exception ex) {

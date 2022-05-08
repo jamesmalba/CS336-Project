@@ -81,4 +81,10 @@ List of Users:
 		
 	<a href='customer_rep_welcome.jsp'>Go back</a>
 </body>
+<style type="text/css">
+td
+{
+    padding:0 15px;
+}
+</style>
 </html>

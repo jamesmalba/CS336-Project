@@ -5,6 +5,7 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%></head>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <body bgcolor=white>
+<h1>Browse</h1>
     <%
     try
     {
@@ -41,7 +42,6 @@
         else if(entity.equals("mlprice"))
         {
         	rs=st.executeQuery("select * from auction,electronics where auction.auctionID=electronics.auction_ID Order by(auction.current_bid);");
-        	out.print("ok");
         }
         else
         {
@@ -92,7 +92,7 @@
 <form method="post" action="Browse.jsp">
 Sort by <select name="Sort by">
     <option value="name">Product Name A-Z</option>
-    <option vale="zname">Product Name Z-A</option>
+    <option value="zname">Product Name Z-A</option>
     <option value="shprice">sale_price-high to low</option> 
     <option value="slprice">sale_price-low to high</option>  
      <option value="mhprice">Current_bid-high to low</option> 

@@ -41,7 +41,18 @@
 		    while (rn.next()) {
 		    	existbidder = rn.getString("a.bidder");
 		    }
+		    String existseller = null;
+		    rn = stmt.executeQuery("select a.seller from auction a where a.auctionId = "+newAuctionId+" and a.seller = '"+bidder+"';");
+		    while (rn.next()) {
+		    	existseller = rn.getString("a.seller");
+		    }
 		   
+		    if (existseller != null) {
+		    	out.println("You cannot bid on your own auction");
+		    	out.println("<a href='bid.jsp'>try again</a>");
+		    	return;
+		    }
+		    
 		    String insert;
 		    int bdog;
 		    //if there exists a bid already
@@ -256,10 +267,7 @@
 			    		}
 		    		}
 		    		
-		    		//
-		    		if (numab == 1 && bidlimits > bbidamount) {
-		    			bbidamount += bidincre; 
-		    		}
+		    		//if maxlimit is the same as the losing bidder
 		    		
 		    		if (maxlimit == bidlimits && bidlimits > bbidamount)  {
 		    			bbidamount += bidincre;
@@ -360,4 +368,10 @@
 	}
 	%>
 </body>
+<style type="text/css">
+td
+{
+    padding:0 15px;
+}
+</style>
 </html>

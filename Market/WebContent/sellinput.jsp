@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1>Selling Item</h1>
-	<%  {
+	<% try {
 			//Get the database connection
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root", "Qwe123456");		
@@ -148,7 +148,11 @@
 			out.println("Sell success!");
         	out.println("<a href='Welcome.jsp'>Go back</a>");
         	//response.sendRedirect("Welcome.jsp");
-	} 
 	%>
+	<% } catch (Exception e) {
+		out.println("Invalid Input.");
+		out.println("<a href='Usell.jsp'>Try again.</a>");
+			out.print(e);
+		}%> 
 </body>
 </html>

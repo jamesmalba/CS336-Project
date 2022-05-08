@@ -64,4 +64,10 @@ List of questions and answers:
 		
 	<a href='Welcome.jsp'>Go back</a>
 </body>
+<style type="text/css">
+td
+{
+    padding:0 15px;
+}
+</style>
 </html>

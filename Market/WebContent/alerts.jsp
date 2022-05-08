@@ -122,4 +122,10 @@
 <a href='Welcome.jsp'>Go back</a>
 <a href='logout.jsp'>Log out</a>
 	</body>
+	<style type="text/css">
+td
+{
+    padding:0 15px;
+}
+</style>
 </html>

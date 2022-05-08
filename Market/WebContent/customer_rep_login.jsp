@@ -8,6 +8,9 @@
 </head>
 <body>
 <h1>Employee Login</h1>
+<%
+session.invalidate();
+%>
 <form action="customer_rep_credentials.jsp" method="post">
 	Username: <input type= text name="uname"> <br> <br>
 	Password: <input type= text name="upass"> <br> <br>
