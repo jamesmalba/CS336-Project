@@ -19,7 +19,7 @@ What item do you want to bid on?
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root", "Qwe123456");		
 			Statement stmt = con.createStatement();
 			
-			String str = "select * from auction,electronics where auction.auctionID=electronics.auction_ID;";
+			String str = "select * from auction,electronics where auction.auctionID=electronics.auction_ID and auction.expdate > now();";
 			ResultSet result = stmt.executeQuery(str);
 		%>
 			
@@ -30,6 +30,7 @@ What item do you want to bid on?
 			<td>Brand</td>
 			<td>Condition</td>
 			<td>Current Bid</td>
+			<td>Minimum Bid Increment</td>
 			<td>Expiration Date/Time</td>
 			<td>Seller</td>
 			<td>AuctionId</td>
@@ -42,6 +43,7 @@ What item do you want to bid on?
 					<td><%= result.getString("Brand") %></td>
 					<td><%= result.getString("scondition") %></td>
 					<td><%= result.getString("current_bid") %></td>
+					<td><%= result.getString("minbidincrement") %></td>
 					<td><%= result.getString("expdate") %></td>
 					<td><%= result.getString("seller") %></td>
 					<td><%= result.getString("auctionId") %></td>

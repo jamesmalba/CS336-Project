@@ -8,6 +8,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Auctions</title>
 	</head>
+	<h1>All Active Auctions</h1>
 	<body>
 		<% try {
 	
@@ -16,7 +17,7 @@
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root", "Qwe123456");		
 			Statement stmt = con.createStatement();
 			
-			String str = "select * from auction,electronics where auction.auctionID=electronics.auction_ID;";
+			String str = "select * from auction,electronics where auction.auctionID=electronics.auction_ID and auction.expdate > now();";
 			ResultSet result = stmt.executeQuery(str);
 		%>
 			

@@ -16,7 +16,8 @@
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root", "Qwe123456");		
 			Statement stmt = con.createStatement();
 			Statement stmt2 = con.createStatement();
-			ResultSet rn;
+			Statement stmt3 = con.createStatement();
+			ResultSet rn,idt;
 			
 			//Declaring variables
 			String bidder = (String)session.getAttribute("user");
@@ -34,7 +35,7 @@
 			float minBid = 0;
 			int acbnum = 0;
 			String existbidder = null; 
-			float malimit = 0;
+			float maxlimit = 0;
 			//checks if there is an existing bid
 			rn = stmt.executeQuery("select a.bidder from auctionbuyer a where a.auction_Id = "+newAuctionId+" and a.bidder = '"+bidder+"';");
 		    while (rn.next()) {
@@ -140,7 +141,7 @@
 		    }
 			
 			else {
-				rn = stmt.executeQuery("select a.minbidincrement,a.current_bid from auction a where a.auctionId = "+newAuctionId+";");
+				idt = stmt3.executeQuery("select a.minbidincrement,a.current_bid from auction a where a.auctionId = "+newAuctionId+";");
 			    while (rn.next()) {
 			    	minbidincrement = rn.getFloat("a.minbidincrement");
 			    	currentBid = rn.getFloat("a.current_bid");
@@ -201,7 +202,7 @@
 		    
 		    
 		    
-		    //counts the number of people who have autobid on 
+		    //number of people who have autobid on, are losing, and are able to bid higher than current 
 		    rn = stmt.executeQuery("select count(*) from auctionbuyer a where a.auction_Id = "+newAuctionId+" and a.autolimit > "+currentBid+" and a.bidamount < "+currentBid+";"); // where a.auction_id = "+newAuctionId+" and NOT a.autolimit = 0
 			    
 		    while (rn.next()){	
@@ -216,8 +217,10 @@
 		    float numab = 0;
 		    rn = stmt.executeQuery("select MAX(a.autolimit) from auctionbuyer a where a.auction_id = "+newAuctionId+";"); //and NOT a.bidder = '"+bidder+"' might need
 		   	while (rn.next()) {
-			   malimit = rn.getFloat("MAX(a.autolimit)");
+			   maxlimit = rn.getFloat("MAX(a.autolimit)");
 		   	}
+		    
+		    //gets second highest
 		   	rn = stmt.executeQuery("SELECT MAX(a.autolimit) FROM auctionbuyer a WHERE a.auction_id = "+newAuctionId+" and a.autolimit < (SELECT MAX(a.autolimit) FROM auctionbuyer a where a.auction_id = "+newAuctionId+");");
 		   	while (rn.next()) {
 				   smax = rn.getFloat("MAX(a.autolimit)");
@@ -245,18 +248,73 @@
 		    		bidincre = rn.getFloat("min_increment");
 		    		bbidamount = rn.getFloat("bidamount");
 		    		String bbidder = rn.getString("bidder");
-		    		if (malimit != bidlimits) {
-		    			while (malimit > bbidamount && bidlimits > bbidamount) {
+		    		
+		    		//maxlimit does not belong to the bidder 
+		    		if (maxlimit != bidlimits) {
+		    			while (maxlimit > bbidamount && bidlimits > bbidamount) {
 			    			bbidamount += bidincre; 
 			    		}
 		    		}
+		    		
+		    		//
 		    		if (numab == 1 && bidlimits > bbidamount) {
 		    			bbidamount += bidincre; 
 		    		}
 		    		
-		    		if (malimit == bidlimits && bidlimits >= (smax + bidincre))  {
-		    			bbidamount = smax + bidincre;
+		    		if (maxlimit == bidlimits && bidlimits > bbidamount)  {
+		    			bbidamount += bidincre;
 		    		}
+		    		
+		    		//Move old bid info to bidhistory
+		    		 String oldseller = null;
+					 int oldid = 0;
+					 float oldincre = 0;
+					 String oldbidder = null;
+					 float oldalim = 0;
+					 float oldbid = 0;
+					 idt = stmt3.executeQuery("select * from auctionbuyer ab where ab.auction_Id = "+newAuctionId+" and ab.bidder = '"+bidder+"';");
+					 while (rn.next()) {
+					    oldid = rn.getInt("auction_id");
+					    oldincre = rn.getFloat("min_increment");
+					    oldbidder = rn.getString("bidder");
+					    oldalim = rn.getFloat("autolimit");
+					    oldbid = rn.getFloat("bidamount");
+					 }
+					    
+					    //get seller name
+					    idt = stmt3.executeQuery("select * from auction ab where ab.auctionId = "+newAuctionId+";");
+					    while (rn.next()) {
+					    	oldseller = rn.getString("seller");
+					    }
+					    
+					    //gets datetime
+					    java.util.Date d = new java.util.Date();
+						java.text.SimpleDateFormat dtf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						String newCreationdate = dtf.format(d);
+					    
+					    //insert to bidhistory
+					    insert = "INSERT INTO bidhistory(seller, bidder, biddt, bidamount, auction_id, minincrement, autolimitb)"
+								+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+					    PreparedStatement ps = con.prepareStatement(insert);
+					    ps.setString(1, oldseller);
+					    ps.setString(2, oldbidder);
+					    ps.setString(3, newCreationdate);
+					    ps.setFloat(4, oldbid);
+					    ps.setInt(5, oldid);
+					    ps.setFloat(6, oldincre);
+					    ps.setFloat(7, oldalim);
+					    ps.executeUpdate();
+					    
+					    //insert into acontains
+					    insert = "INSERT INTO acontains(auctionId, auction_id, bidamount)"
+								+ "VALUES (?, ?, ?)";
+					    ps = con.prepareStatement(insert);
+					    ps.setInt(1, oldid);
+					    ps.setInt(2, oldid);
+					    ps.setFloat(3, oldbid);
+					    ps.executeUpdate();
+		    		//----
+		    		
 		    		
 		    		obdog = stmt2.executeUpdate("UPDATE auctionbuyer set bidamount = "+bbidamount+" where auction_id = "+newAuctionId+" and bidder = '"+bbidder+"';");
 		    	}
