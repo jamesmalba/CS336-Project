@@ -117,7 +117,7 @@ Search for Similar items
 	<td>Product name </td><td><input type="text" name="name"></td>
 <input type="submit" value="Search" />
 </form>
-
+	<a href='Welcome.jsp'>Go back</a>
 <script>
 
 </script>
