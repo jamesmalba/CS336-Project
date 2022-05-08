@@ -15,6 +15,8 @@
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root", "Qwe123456");		
 			Statement stmt = con.createStatement();
+			
+
 		
 			//Gets current time 
 			java.util.Date d = new java.util.Date();
@@ -26,10 +28,13 @@
 			String str = "select e.name, a.current_bid, a.seller, a.expdate, a.auctionid, aa.bidamount from auction a, bidsto, holds h, electronics e, auctionbuyer aa where aa.bidder = '"+bidder+"' and aa.auction_id = bidsto.auction_id and bidsto.auctionid = a.auctionid and now() < a.expdate and a.auctionid = h.auctionid and h.auction_id = e.auction_id and not a.highestbidder = '"+bidder+"' group by aa.bidder;";
 			ResultSet result = stmt.executeQuery(str);
 		%>
-	<h1>Alerts</h1>		
+	<h1>Alerts</h1>	
+	<style>table, tr, td {border: 1px solid black;}tr, td {padding: 10px;}</style>	
+	<caption>Auctions where you have been outbid</caption>
 	<table>
 		<tr>    
-			<td>Name</td>
+			<td>Auction ID</td>
+			<td>Item Name</td>
 			<td>Current Bid</td>
 			<td>Seller</td>
 			<td>Expiration Date</td>
@@ -48,6 +53,7 @@
 			}
 			%>
 				<tr>    
+					<td><%= result.getString("a.auctionid") %></td>
 					<td><%= result.getString("e.name") %></td>
 					<td><%= result.getString("a.current_bid") %></td>
 					<td><%= result.getString("a.seller") %></td>
@@ -74,10 +80,11 @@
 	<br>
 	<br>
 	<br>
-	<h3>Bids that have gone through your upper limit</h3>
+	<caption>Auctions where your upper limit has been outbid</caption>
 			<table>
 			<tr>    
-				<td>Name</td>
+				<td>Auction ID</td>
+				<td>Item Name</td>
 				<td>Current Bid</td>
 				<td>Seller</td>
 				<td>Expiration Date</td>
@@ -96,20 +103,52 @@
 				}
 				%>
 					<tr>    
+						<td><%= result.getString("a.auctionid") %></td>
 						<td><%= result.getString("e.name") %></td>
 						<td><%= result.getString("a.current_bid") %></td>
 						<td><%= result.getString("a.seller") %></td>
 						<td><%= result.getString("a.expdate") %></td>
 						<td><%= result.getString("aa.bidamount") %></td>
 					</tr>
-				<% } 
+				<% } %>
+			
+
+		</table>
+		<br>
+		<%
+			String item_type = request.getParameter("type");
+			String item_name = request.getParameter("item");
+			str = "select e.name, a.current_bid, a.seller, a.expdate, a.auctionid from auction a, electronics e where e.name = '"+item_name+"' and e.auction_id = a.auctionid group by e.name;";
+			result = stmt.executeQuery(str);
+		%>
+		<caption>Items you set an alert for</caption>
+		<table>
+			<tr>    
+				<td>Auction ID</td>
+				<td>Item Name</td>
+				<td>Current Bid</td>
+				<td>Seller</td>
+				<td>Expiration Date</td>
+			</tr>
+				<%
+				
+				//parse out the results
+				while (result.next() ) { 
+				%>
+					<tr>    
+						<td><%= result.getString("a.auctionid") %></td>
+						<td><%= result.getString("e.name") %></td>
+						<td><%= result.getString("a.current_bid") %></td>
+						<td><%= result.getString("a.seller") %></td>
+						<td><%= result.getString("a.expdate") %></td>
+					</tr>
+					<% } 
 			
 			//close the connection.
 			con.close();
 			} %>
-			
 		</table>
-		<h3>Items you set an alert for</h3>
+		
 		<br><br><br>
 		<a href='bid.jsp'>Bid again</a>
 		<br><br>

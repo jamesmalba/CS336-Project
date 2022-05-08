@@ -23,6 +23,7 @@
 		%>
 			
 		<!--  Make an HTML table to show the results in: -->
+	<style>table, tr, td {border: 1px solid black;}tr, td {padding: 10px;}</style>
 	<table>
 		<tr>    
 			<td>Auction ID</td>
