@@ -26,9 +26,9 @@
       <thead>
           <tr>
                 <th>Seller</th>
-                <th>bidder</th>
-                 <th>time</th>
-                  <th>buy_price</th>
+                <th>Bidder</th>
+                 <th>Date Time</th>
+                  <th>Bid Amount</th>
              
           </tr>
       </thead>
@@ -39,8 +39,8 @@
             <tr>
                 <td><%=rs.getString("Seller") %></td>
               	<td><%=rs.getString("bidder") %></td>
-              	<td><%=rs.getString("time") %></td>
-              	<td><%=rs.getString("buyer_price") %></td>
+              	<td><%=rs.getString("biddt") %></td>
+              	<td><%=rs.getString("bidamount") %></td>
               	
             </tr>
             <%}%>
