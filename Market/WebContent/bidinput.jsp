@@ -34,12 +34,12 @@
 			float currentBid = 0; 
 			float minBid = 0;
 			int acbnum = 0;
-			String existbidder = null; 
+			int existbidder = 0; 
 			float maxlimit = 0;
 			//checks if there is an existing bid
-			rn = stmt.executeQuery("select a.bidder from auctionbuyer a where a.auction_Id = "+newAuctionId+" and a.bidder = '"+bidder+"';");
+			rn = stmt.executeQuery("select count(*) from auctionbuyer a where a.auction_Id = "+newAuctionId+" and a.bidder = '"+bidder+"';");
 		    while (rn.next()) {
-		    	existbidder = rn.getString("a.bidder");
+		    	existbidder = rn.getInt("count(*)");
 		    }
 		    String existseller = null;
 		    rn = stmt.executeQuery("select a.seller from auction a where a.auctionId = "+newAuctionId+" and a.seller = '"+bidder+"';");
@@ -58,11 +58,11 @@
 		    //if there exists a bid already
 		                  
 		    
-			if(existbidder != null){
+			if(existbidder != 0){
 		    	/*out.println("You already have an existing bid on the item (AuctionID: "+newAuctionId+")");
 		    	out.println("<a href='bid.jsp'>Go back</a>");
 		    	return;*/
-				
+				rn = stmt.executeQuery("select a.minbidincrement,a.current_bid from auction a where a.auctionId = "+newAuctionId+";");
 			    while (rn.next()) {
 			    	minbidincrement = rn.getFloat("a.minbidincrement");
 			    	currentBid = rn.getFloat("a.current_bid");
