@@ -338,6 +338,7 @@ CREATE TABLE `customer_rep` (
 
 LOCK TABLES `customer_rep` WRITE;
 /*!40000 ALTER TABLE `customer_rep` DISABLE KEYS */;
+INSERT INTO `customer_rep`(rep_email, name, password) VALUES('newrep@buyme.com', 'Regina', 'password');
 /*!40000 ALTER TABLE `customer_rep` ENABLE KEYS */;
 UNLOCK TABLES;
 

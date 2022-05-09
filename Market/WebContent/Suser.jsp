@@ -24,7 +24,7 @@
         }
         else
         {
-        	rs=st.executeQuery("select * from bidhistory, auction, electronics Where bidhistory.seller=" +"'"+entity+"' AND auction.auctionId=bidhistory.auction_id AND electronics.auction_id=auction.auctionId;");
+        	rs=st.executeQuery("select * from bidhistory, auction, electronics e Where bidhistory.seller=" +"'"+entity+"' AND auction.auctionId=bidhistory.auction_id AND e.auction_id=auction.auctionId;");
         }
   
     %><table border=1 align=center style="text-align:center">
@@ -45,9 +45,9 @@
             <tr>
                 <td><%=rs.getString("Seller") %></td>
               	<td><%=rs.getString("bidder") %></td>
-              	<td><%=rs.getString("time") %></td>
-              	<td><%=rs.getString("buyer_price") %></td>
-              		<td><%=rs.getString("buyer_price") %></td>
+              	<td><%=rs.getString("biddt") %></td>
+              	<td><%=rs.getString("bidamount") %></td>
+              		<td><%=rs.getString("e.name") %></td>
             </tr>
             <%}%>
             
