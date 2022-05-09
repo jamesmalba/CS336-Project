@@ -19,7 +19,7 @@
         String entity = request.getParameter("history");
         ResultSet rs;
        
-       rs=st.executeQuery("select * from bidhistory,auction where bidhistory.auction_id=auction.auctionID;");
+       rs=st.executeQuery("select * from bidhistory,auction where bidhistory.auction_id='"+entity+"';");
         
        
     %><table border=1 align=center style="text-align:center">
