@@ -264,14 +264,14 @@
 		    		
 		    		//maxlimit does not belong to the bidder 
 		    		if (maxlimit != bidlimits) {
-		    			while (maxlimit > bbidamount && bidlimits > bbidamount) {
+		    			while (maxlimit >= bbidamount && bidlimits > bbidamount) {
 			    			bbidamount += bidincre; 
 			    		}
 		    		}
 		    		
 		    		//if maxlimit is the same as the losing bidder
 		    		
-		    		while ((smax > bbidamount && bidlimits > bbidamount) || (bidamount > bbidamount && bidlimits > bbidamount))  {
+		    		while ((smax >= bbidamount && bidlimits > bbidamount) || (bidamount >= bbidamount && bidlimits > bbidamount))  {
 		    			bbidamount += bidincre;
 		    		}
 		    		
