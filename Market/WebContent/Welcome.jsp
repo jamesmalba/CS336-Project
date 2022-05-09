@@ -55,7 +55,6 @@ Hello <%=session.getAttribute("user")%> <br>
 	<br><br>
 	<a href='qna.jsp'>Customer Service Question and Answer</a>
 	<br><br>
-	<a href='uchange.jsp'>Want to add/change credentials?</a>
 	<br>
 	<a href='logout.jsp'>Log out</a>
 	<br>
