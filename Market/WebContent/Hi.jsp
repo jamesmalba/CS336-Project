@@ -11,6 +11,9 @@
 <body>
 <h1>Welcome to BuyMe</h1>
 	
+<%
+session.invalidate();
+%>
 	<h2>User Login</h2>
 	<form action="Login.jsp" method="post">
 	<table>

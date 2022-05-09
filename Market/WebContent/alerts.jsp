@@ -30,7 +30,7 @@
 		%>
 	<h1>Alerts</h1>	
 	<style>table, tr, td {border: 1px solid black;}tr, td {padding: 10px;}</style>	
-	<caption>Auctions where you have been outbid</caption>
+	<caption>Auctions where you have been outbid.</caption>
 	<table>
 		<tr>    
 			<td>Auction ID</td>
@@ -80,7 +80,7 @@
 	<br>
 	<br>
 	<br>
-	<caption>Auctions where your upper limit has been outbid</caption>
+	<caption>Auctions where your upper limit has been outbid.</caption>
 			<table>
 			<tr>    
 				<td>Auction ID</td>
@@ -96,7 +96,7 @@
 				while (result.next() ) { 
 				name = result.getString("e.name");
 				if (!name.equals(null)) {
-					out.println("Oh no! Looks like you have been outbid on.");
+					out.println("Oh no! Looks like your upper limit has been outbid on.");
 				}
 				else {
 					out.println("Everything is good!");

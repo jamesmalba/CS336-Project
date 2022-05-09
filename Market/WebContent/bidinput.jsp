@@ -214,12 +214,10 @@
 		    
 		    
 		    //number of people who have autobid on, are losing, and are able to bid higher than current 
-		    rn = stmt.executeQuery("select count(*) from auctionbuyer a where a.auction_Id = "+newAuctionId+" and a.autolimit > "+currentBid+" and a.bidamount < "+currentBid+";"); // where a.auction_id = "+newAuctionId+" and NOT a.autolimit = 0
-			    
+		    rn = stmt.executeQuery("select count(*) from auctionbuyer a where a.auction_Id = "+newAuctionId+" and a.autolimit > "+bidamount+" and a.bidamount < "+bidamount+";"); // where a.auction_id = "+newAuctionId+" and NOT a.autolimit = 0
 		    while (rn.next()){	
 		    	acbnum = rn.getInt("count(*)");
 		    }
-		    			
 		    			
 		    //queries for all autobidders participating in the same auction
 		    
@@ -250,10 +248,14 @@
 		   	}
    			int obdog = 0;
    			
+   			//
+   			
    			rn = stmt.executeQuery("select * from auctionbuyer a where a.auction_id = "+newAuctionId+";");
 		   	while (rn.next()) {
+		   
 		    	//if there are competing bidders calculate autobid if possible
 		    	if (acbnum > 0){
+		    		
 		    		//checks if bidlimit is higher than highest bid 
 		    		bidlimits = rn.getFloat("autolimit");
 		    		bidincre = rn.getFloat("min_increment");
@@ -269,7 +271,7 @@
 		    		
 		    		//if maxlimit is the same as the losing bidder
 		    		
-		    		if (maxlimit == bidlimits && bidlimits > bbidamount)  {
+		    		while ((smax > bbidamount && bidlimits > bbidamount) || (bidamount > bbidamount && bidlimits > bbidamount))  {
 		    			bbidamount += bidincre;
 		    		}
 		    		
@@ -343,6 +345,7 @@
 			pt.setInt(3, newAuctionId);
 			pt.executeUpdate();
 		    	
+			
 		    //checks if there is a bid on the auction already
 		    /*rn = stmt.executeQuery("select a.highestbidder,a.seller from auction a where a.auctionId = "+newAuctionId+";");
 		    while (rn.next()) {
