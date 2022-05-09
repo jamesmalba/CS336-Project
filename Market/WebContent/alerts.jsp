@@ -30,7 +30,7 @@
 		%>
 	<h1>Alerts</h1>	
 	<style>table, tr, td {border: 1px solid black;}tr, td {padding: 10px;}</style>	
-	<caption>Auctions where you have been outbid.</caption>
+	<caption>Auctions where you have been outbid</caption>
 	<table>
 		<tr>    
 			<td>Auction ID</td>
@@ -61,7 +61,7 @@
 					<td><%= result.getString("aa.bidamount") %></td>
 				</tr>
 			<% } %>
-			<% {
+			<% 
 	
 			//Get the database connection
 			//Gets current time 
@@ -80,7 +80,7 @@
 	<br>
 	<br>
 	<br>
-	<caption>Auctions where your upper limit has been outbid.</caption>
+	<caption>Auctions where your upper limit has been outbid</caption>
 			<table>
 			<tr>    
 				<td>Auction ID</td>
@@ -96,7 +96,7 @@
 				while (result.next() ) { 
 				name = result.getString("e.name");
 				if (!name.equals(null)) {
-					out.println("Oh no! Looks like your upper limit has been outbid on.");
+					out.println("Oh no! Looks like you have been outbid on.");
 				}
 				else {
 					out.println("Everything is good!");
@@ -114,13 +114,7 @@
 			
 
 		</table>
-		<br>
-		<%
-			String item_type = request.getParameter("type");
-			String item_name = request.getParameter("item");
-			str = "select e.name, a.current_bid, a.seller, a.expdate, a.auctionid from auction a, electronics e where e.name = '"+item_name+"' and e.auction_id = a.auctionid group by e.name;";
-			result = stmt.executeQuery(str);
-		%>
+		<br><br><br>
 		<caption>Items you set an alert for</caption>
 		<table>
 			<tr>    
@@ -130,23 +124,33 @@
 				<td>Seller</td>
 				<td>Expiration Date</td>
 			</tr>
-				<%
-				
+		<%
+			
+			String item_name =  "";
+			str = "select r.item_name from requests r where r.email = '"+bidder+"'";
+			result = stmt.executeQuery(str);
+			
+			if(result.next()){
+			item_name = result.getString("r.item_name");
+			
+			str = "select e.name, a.current_bid, a.seller, a.expdate, a.auctionid from auction a, electronics e where e.name = '"+item_name+"' and e.auction_id = a.auctionid group by a.auctionid;";
+			ResultSet rs = stmt.executeQuery(str);
 				//parse out the results
-				while (result.next() ) { 
+				while (rs.next() ) { 
 				%>
 					<tr>    
-						<td><%= result.getString("a.auctionid") %></td>
-						<td><%= result.getString("e.name") %></td>
-						<td><%= result.getString("a.current_bid") %></td>
-						<td><%= result.getString("a.seller") %></td>
-						<td><%= result.getString("a.expdate") %></td>
+						<td><%= rs.getString("a.auctionid") %></td>
+						<td><%= rs.getString("e.name") %></td>
+						<td><%= rs.getString("a.current_bid") %></td>
+						<td><%= rs.getString("a.seller") %></td>
+						<td><%= rs.getString("a.expdate") %></td>
 					</tr>
-					<% } 
+					<% }
+			}
 			
 			//close the connection.
 			con.close();
-			} %>
+			 %>
 		</table>
 		
 		<br><br><br>
@@ -158,7 +162,7 @@
 		
 		
 
-<a href='Welcome.jsp'>Go back</a>
+<a href='Welcome.jsp'>Go back</a><br>
 <a href='logout.jsp'>Log out</a>
 	</body>
 	<style type="text/css">

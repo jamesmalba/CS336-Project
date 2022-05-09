@@ -10,7 +10,7 @@
 	</head>
 	<body>
 		<h2>Set an alert to get notified when an item becomes available</h2>
-		<form method="post" action="alerts.jsp">
+		<form method="post" action="setalert.jsp">
 		<table>
 			<tr>    
 				<td>Item type:</td>
@@ -30,6 +30,39 @@
 			<input type = "submit" value = "Set alert!">
 		</form>	
 		<br><br>
+		<%
+			try{
+				Class.forName("com.mysql.jdbc.Driver");
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ebay","root", "Qwe123456");		
+				Statement stmt = con.createStatement();
+				String uemail = (String)session.getAttribute("user");
+				ResultSet rn;
+				int existitem = 0;
+				String itemname = request.getParameter("item");
+				String itemtype = request.getParameter("type");
+				
+				rn = stmt.executeQuery("select count(*) from requests where requests.item_name = '"+itemname+"';");
+				while (rn.next()) {
+					existitem = rn.getInt("count(*)");
+				}
+				
+				if (existitem == 1) {
+					out.println("You have already set an alert for this item.");
+			    	return;
+				}
+				else{
+					String str = "INSERT INTO requests(email, item_name) values('"+uemail+"', '"+itemname+"');";
+					PreparedStatement ps = con.prepareStatement(str);
+					ps.executeUpdate();
+					out.print("Your alert has been set <br><br>");
+				}
+				con.close();
+				
+			}
+			catch(Exception e){
+				out.print(e);
+			}
+		%>
 					
 
 			<a href='Welcome.jsp'>Return to Home Page</a>
