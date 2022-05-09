@@ -72,7 +72,7 @@
 			<td>Seller</td>
 		</tr>
 			<%
-			String st = "select * FROM auction where auction.expdate < now() and not auction.sale_price is null;";
+			String st = "select * FROM auction a, electronics e where a.auctionid = e.auction_id and a.expdate < now() and not a.sale_price is null;";
 			result = stmt.executeQuery(st);	
 			while (result.next() ) { %>
 				<tr>    
@@ -85,9 +85,11 @@
 				</tr>
 				
 
-			<% }
-		
-			
+			<% 
+			String sale = "INSERT INTO ledger(sale_date, item_price, item, item_type, buyer, seller, sale_id) values('"+result.getString("expdate")+"', '"+result.getString("sale_price")+"', '"+result.getString("e.name")+"', '"+result.getString("e.brand")+"', '"+result.getString("highestbidder")+"', '"+result.getString("seller")+"', '"+result.getString("auctionid")+"');";
+			PreparedStatement ps = con.prepareStatement(sale);
+			try{ps.executeUpdate();} catch(Exception e){}
+			}
 			
 			
 			
